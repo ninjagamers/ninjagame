@@ -1,0 +1,24 @@
+ENEMY (per animation)
+W: 64 px
+H: 128 px
+
+SPIKES (per animation)
+W:128
+H:32
+
+FIRE (per animation)
+W:
+H:
+
+HEART
+W:23
+H:23
+
+PLAYER (per animation)
+W:50
+H:50
+
+SHIRUKEN (per animation)
+W:64
+H:64
+
