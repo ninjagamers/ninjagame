@@ -23,14 +23,31 @@ function getDeltaTime()
 }
 //-------------------- Don't modify anything above here
 
+// Canvas settings.
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
+
+// Tile set constants.
+var TILE = 32; // Width/height of tile.
+var MAP = {tw:20, th:15};
+var TILESET_COUNT_X = 5; // Columns in the tileset.
+var TILESET_COUNT_Y = 3; // Rows in the tileset.
+var TILESET_TILE = TILE *2;
+
+// Forces constants.
+var METER = TILE; // 1m.
+var GRAVITY = METER * 9.8; // Default gravity.
+var INIT_SCREEN_MOVEMENT_SPEED = TILE;
+
+// Other
+var ninja = new Ninja();
+var keyboard = new Keyboard();
+
 
 function init()
 {
   // Main constructor.
 }
-
 
 function run()
 {
@@ -39,13 +56,22 @@ function run()
     context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // Add Game logic here.
-}
 
+    // Handle Ninja.
+    // ninja.update();
+    ninja.draw();
+
+}
 
 function drawMap()
 {
 }
 
+// Util Functions.
+function pixelToTile(pixel)
+{
+    return Math.floor(pixel/TILE);
+}
 
 init(); // Run the constructor.
 

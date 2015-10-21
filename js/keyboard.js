@@ -1,4 +1,4 @@
-var Keyboard = function ()
+var Keyboard = function()
 {
 	var self = this;
 
