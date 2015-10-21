@@ -106,3 +106,25 @@ sfxFootstepsV2 = new Howl(
         isSfxPlaying = false;
     }
 });
+
+sfxJump = new Howl(
+{
+    urls: ["sounds/jump.ogg"],
+    buffer: true,
+    volume: 1, // may need tweaking
+    onend: function()
+    {
+        isSfxPlaying = false;
+    }
+});
+
+sfxPowerup = new Howl(
+{
+    urls: ["sounds/powerup.ogg"],
+    buffer: true,
+    volume: 1, // may need tweaking
+    onend: function()
+    {
+        isSfxPlaying = false;
+    }
+});
