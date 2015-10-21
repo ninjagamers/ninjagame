@@ -19,6 +19,8 @@ Shuriken.prototype.update = function(deltaTime)
 
 Shuriken.prototype.draw = function()
 {
+	this.position.x = Enemy.position.x
+	this.position.y = Enemy.position.y
 	var screenX = this.position.x - worldOffsetX;
 	this.sprite.draw(context, screenX, this.position.y);
 }

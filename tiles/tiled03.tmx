@@ -5,12 +5,12 @@
  </tileset>
  <layer name="floors" width="20" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjY2BgYKMiZkXCyICVTDwKRsEooB9gJICJVQfDTFTGAJqhAQg=
+   eJxjY2BgYKMiZqUyHgWjYBTQDzBi4RPC+NQyURkDANmxARQ=
   </data>
  </layer>
  <layer name="pick ups/traps" width="20" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYKAdYEfCo2AUjETAQmXzOAbYPGYoHigAAHT0ADA=
+   eJxjYBgYwEahPKnqWalsHqmA2uaR6p9RMAqIBcxImBT19AAAoNQAOA==
   </data>
  </layer>
 </map>
