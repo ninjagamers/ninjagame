@@ -23,6 +23,9 @@ function getDeltaTime()
 }
 //-------------------- Don't modify anything above here
 
+// Debug
+var DEBUG_MODE = false;
+
 // Canvas settings.
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
@@ -46,30 +49,57 @@ var INIT_SCREEN_MOVEMENT_SPEED = TILE;
 // Level position
 var stageOffsetX = 0;
 
+// Input
+var wasSpacePressed = false;
+
 // Other
 var ninja = new Ninja();
 var keyboard = new Keyboard();
 var courses = []; // levels
+var levelSpeed = 150;
 
+// Hit Ninja
+var shakeScreen = false;
+var shakeScreenTimer = 0;
 
 function init()
 {
     // Main constructor.
     addRandomCourse();
     addRandomCourse();
+
 }
 
 function run()
 {
     var deltaTime = getDeltaTime(); // Get Delta.
-    context.fillStyle = "#ccc"; // Clear Screen.
+
+    if (shakeScreen)
+    {
+        makeScreenShake(deltaTime);
+    }
+
+
+    if (shakeScreen)
+    {
+        context.fillStyle = "red"; // Clear Screen.
+    }
+    else
+    {
+        context.fillStyle = "#ccc"; // Clear Screen.
+    }
+
     context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    // Handle Input
+    checkForClicks();
+
 
     // Add Game logic here:
 
 
     // Move the level.
-    stageOffsetX = stageOffsetX + (deltaTime * 150);
+    stageOffsetX = stageOffsetX + (deltaTime * levelSpeed);
 
     // Handle levels
 
@@ -78,19 +108,51 @@ function run()
 
     var index;
     for (index = 0; index < courses.length; ++index) {
-        drawMap(courses[index], 0, Math.floor(stageOffsetX - (index * (20 * TILE))));
-        drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))));
+        drawMap(courses[index], 0, Math.floor(stageOffsetX - (index * (20 * TILE))), false);
+        drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
     // Handle Ninja.
-    // ninja.update();
+    ninja.update(deltaTime);
     ninja.draw();
+
+    if (shakeScreen)
+    {
+        restoreScreen();
+    }
 }
 
-function drawMap(test, drawlayer, stageOffsetXx)
+
+function makeScreenShake(deltaTime) {
+
+    //console.log(shakeScreenTimer);
+
+    if(shakeScreenTimer > 0.2)
+    {
+        shakeScreen = false;
+        shakeScreenTimer = 0;
+    }
+    else
+    {
+        shakeScreenTimer += deltaTime;
+        context.save();
+        var dx = Math.random()*10;
+        var dy = Math.random()*1;
+        context.translate(dx, dy);
+    }
+}
+
+function restoreScreen(){
+    context.restore();
+}
+
+
+function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 {
     // Scrolling the level.
     var maxTiles = 20;
+
+    var count = 0;
 
     // Draw the platform Map.
     for(var y = 0; y < 15; y++)
@@ -105,13 +167,55 @@ function drawMap(test, drawlayer, stageOffsetXx)
                 var sx = (tileIndex % TILESET_COUNT_X) * TILE;
                 var sy = (Math.floor(tileIndex / TILESET_COUNT_X)) * TILE;
 
+                // Handle Collisions
+
+                var dx = x * TILE - curStageOffsetX;
+                var dy = y * TILE;
+
+                if (checkCollision && dx < 64 && dx > 0)
+                {
+                    count++;
+                    //console.log(count);
+
+                    handleCollisions(dx, dy);
+
+                }
+
+
                 // Draw Image: context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-                context.drawImage(tileset, sx, sy, TILE, TILE, x * TILE - stageOffsetXx, (y) * TILE, TILE, TILE);
+                context.drawImage(tileset, sx, sy, TILE, TILE, dx, dy, TILE, TILE);
             }
             idx++;
         }
     }
 }
+
+function handleCollisions(dx, dy)
+{
+    // Trap -
+    var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
+
+    // Ninja -
+    var rect2 = {x: ninja.position.x - (ninja.width*0.8), y: ninja.position.y - (ninja.height*1.5), width: ninja.width - (ninja.width/3), height: ninja.height + 1};
+
+    if (DEBUG_MODE)
+    {
+        context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
+        context.fill();
+        context.strokeStyle="green";
+        context.stroke();
+    }
+
+    if (rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.height + rect1.y > rect2.y) {
+
+        // Collision Detected
+        shakeScreen = true;
+    }
+}
+
 
 // Adds a course.
 function addRandomCourse()
@@ -121,6 +225,27 @@ function addRandomCourse()
     courses.push(newcourse);
 }
 
+function checkForClicks()
+{
+    // Check for spacebar
+    if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
+    {
+        wasSpacePressed = true;
+    }
+    else
+    {
+        if (wasSpacePressed)
+        {
+            ninja.flip();
+        }
+        wasSpacePressed = false;
+    }
+}
+
+// Check if ninja is colliding with a trap
+
+
+
 // Adds a course.
 function destroyCourses()
 {
@@ -129,6 +254,17 @@ function destroyCourses()
         courses.shift();
         stageOffsetX = stageOffsetX - 640;
         addRandomCourse();
+
+
+        if (levelSpeed < 450)
+        {
+            levelSpeed = levelSpeed + 25; // increase speed.
+        }
+        else
+        {
+            levelSpeed = 450;
+        }
+
     }
 
 }

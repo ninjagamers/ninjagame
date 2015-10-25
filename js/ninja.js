@@ -32,7 +32,7 @@ var Ninja = function(){
 
   this.gravityDown = true;
   this.lives = 3;
-}
+};
 
 Ninja.prototype.update = function(deltaTime)
 {
@@ -42,10 +42,14 @@ Ninja.prototype.update = function(deltaTime)
         ninja.position.y += GRAVITY * 2 * deltaTime;
 
         // prevent going through floor.
-        if (ninja.position.y > TILE * 13)
+        if (ninja.position.y > TILE * 14)
         {
-            ninja.position.y = TILE * 13;
+            ninja.position.y = TILE * 14;
         }
+
+
+        this.sprite.setAnimation(ANIM_RUN_FLOOR);
+
     }
     else
     // If ninja is jumping up.
@@ -53,11 +57,17 @@ Ninja.prototype.update = function(deltaTime)
         ninja.position.y -= GRAVITY * 2 * deltaTime;
 
         // prevent going through roof.
-        if (ninja.position.y < TILE * 2)
+        if (ninja.position.y < TILE * 4)
         {
-            ninja.position.y = TILE * 2;
+            ninja.position.y = TILE * 4;
         }
+
+
+        this.sprite.setAnimation(ANIM_RUN_ROOF);
+
     }
+
+    //ninja.position.y = TILE * 7;
 };
 
 Ninja.prototype.draw = function()
