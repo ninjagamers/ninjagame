@@ -46,6 +46,17 @@ var METER = TILE; // 1m.
 var GRAVITY = METER * 9.8; // Default gravity.
 var INIT_SCREEN_MOVEMENT_SPEED = TILE;
 
+// Gamestate constants.
+var STATE_SPLASH = 0;
+var STATE_GAME = 1;
+var STATE_GAMEOVER = 2;
+// Setting gamestate to splash
+var gameState = STATE_SPLASH;
+
+// Loading splash screen image #splashimage
+var splashImage = document.createElement("img");
+// splash.src = "filename.png"
+
 // Level position
 var stageOffsetX = 0;
 
@@ -70,9 +81,22 @@ function init()
 
 }
 
-function run()
+function gameStateSplash(deltaTime)
 {
-    var deltaTime = getDeltaTime(); // Get Delta.
+	// Need to get a splash screen image #splashimage to find code
+	// context.drawImage(splashImage, 0, 0);
+	context.fillStyle = "#000000";
+	context.font = "50px Arial";
+	context.fillText("Press Space", 175, 250);
+	if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
+	{
+		gameState = STATE_GAME;
+	}
+}
+
+function gameStateGame(deltaTime)
+{
+	// no longer needed var deltaTime = getDeltaTime(); // Get Delta.
 
     if (shakeScreen)
     {
@@ -120,6 +144,29 @@ function run()
     {
         restoreScreen();
     }
+}
+
+function gameStateGameover(deltaTime)
+{
+	
+}
+
+function run()
+{
+	var deltaTime = getDeltaTime(); // Get Delta.
+	
+	switch(gameState)
+	{
+		case STATE_SPLASH:
+			gameStateSplash(deltaTime);
+		break;
+		case STATE_GAME:
+			gameStateGame(deltaTime);
+		break;
+		case STATE_GAMEOVER:
+			gameStateGameover(deltaTime)
+		break;
+	} 
 }
 
 

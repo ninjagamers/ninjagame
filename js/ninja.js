@@ -14,10 +14,10 @@ var Ninja = function(){
 
   this.sprite = new Sprite("images/player_sprite.png");
   
-  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[1, 2, 3, 4]);
-  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[47, 48, 49 ,50]);
-  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[17]);
-  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[32]);
+  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[0, 1, 2, 3, 4]);
+  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[45, 46, 47, 48, 49]);
+  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[16]);
+  this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[31]);
 
   for (var i=0; i<ANIM_MAX; i++)
 	{
