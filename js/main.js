@@ -57,6 +57,13 @@ var gameState = STATE_SPLASH;
 var splashImage = document.createElement("img");
 // splash.src = "filename.png"
 
+// Background variables
+var backnear = document.createElement("img");
+backnear.src = "images/back_near.png";
+var backnearX = 0;
+var backfar = document.createElement("img");
+backfar.src = "images/back_far.png";
+var backfarX = 0;
 // Level position
 var stageOffsetX = 0;
 
@@ -115,6 +122,7 @@ function gameStateGame(deltaTime)
 
     context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    drawBackground(deltaTime)
     // Handle Input
     checkForClicks();
 
@@ -191,6 +199,27 @@ function makeScreenShake(deltaTime) {
 
 function restoreScreen(){
     context.restore();
+}
+
+// Draw a parallax scrolling background.\
+function drawBackground(deltaTime)
+{
+    context.drawImage(backfar, backfarX, 50);
+    context.drawImage(backfar, backfarX + 640, 50);
+    context.drawImage(backnear, backnearX, 50);
+    context.drawImage(backnear, backnearX + 640, 50);
+
+    backfarX = backfarX - (deltaTime * levelSpeed /4);
+    backnearX = backnearX - (deltaTime * levelSpeed /3);
+
+    if (backfarX < -640)
+    {
+      backfarX = backfarX + 640;
+    }
+    if (backnearX < -640)
+    {
+      backnearX = backnearX + 640;
+    }
 }
 
 
