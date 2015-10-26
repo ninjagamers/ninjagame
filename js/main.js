@@ -372,16 +372,15 @@ function checkForClicks()
     // Check for spacebar
     if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
     {
-        wasSpacePressed = true;
-    }
+		//tweaked code to flip on keydown to reduce delay
+		if(wasSpacePressed == false)
+		{
+			ninja.flip();
+		}
+	    wasSpacePressed = true;
+	}
     else
-    {
-        if (wasSpacePressed)
-        {
-            ninja.flip();
-        }
-        wasSpacePressed = false;
-    }
+    wasSpacePressed = false;
 }
 
 // Check if ninja is colliding with a trap

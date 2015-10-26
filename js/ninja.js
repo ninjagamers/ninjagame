@@ -37,53 +37,46 @@ var Ninja = function(){
 Ninja.prototype.update = function(deltaTime)
 {
 	this.sprite.update(deltaTime);
+	
     // If ninja is falling down.
-    if (this.gravityDown)
+    if (this.gravityDown == true)
     {
-        ninja.position.y += GRAVITY * 2 * deltaTime;
-
+		ninja.position.y += GRAVITY * 2 * deltaTime;
+					
         // prevent going through floor.
         if (ninja.position.y > TILE * 14)
         {
             ninja.position.y = TILE * 14;
-        }
-
-
-        this.sprite.setAnimation(ANIM_RUN_FLOOR);
-
+        }		
     }
-    else
+    else 
     // If ninja is jumping up.
     {
         ninja.position.y -= GRAVITY * 2 * deltaTime;
-
+		
         // prevent going through roof.
-        if (ninja.position.y < TILE * 4)
+        if (ninja.position.y < TILE * 4.45)
         {
-            ninja.position.y = TILE * 4;
-        }
-
-
-        this.sprite.setAnimation(ANIM_RUN_ROOF);
-
-    }
-
-    //ninja.position.y = TILE * 7;
-};
+            ninja.position.y = TILE * 4.45;
+        }  
+	} 
+}
 
 Ninja.prototype.draw = function()
 {
     this.sprite.draw(context, this.position.x, this.position.y);
-};
+}
 
 Ninja.prototype.flip = function()
 {
     if (this.gravityDown == true)
     {
         this.gravityDown = false;
+		this.sprite.setAnimation(ANIM_RUN_ROOF);
     }
     else
     {
         this.gravityDown = true;
+		this.sprite.setAnimation(ANIM_RUN_FLOOR);
     }
-};
+}
