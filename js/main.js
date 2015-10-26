@@ -46,7 +46,7 @@ var distance = 0;
 
 // Load the image to use for level tiles.
 var tileset = document.createElement("img");
-tileset.src = "tiles/tiles2.png";
+tileset.src = "tiles/TMX/tiles2.png";
 
 // Tile set constants.
 var TILE = 32; // Width/height of tile.
