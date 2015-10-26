@@ -10,6 +10,8 @@ var ANIM_DIE_FLOOR = 2;
 var ANIM_DIE_ROOF = 3;
 var ANIM_MAX = 4;
 
+var dieSpriteTimer = 1;
+
 var Ninja = function(){
 
   this.sprite = new Sprite("images/player_sprite.png");
@@ -37,6 +39,20 @@ var Ninja = function(){
 Ninja.prototype.update = function(deltaTime)
 {
 	this.sprite.update(deltaTime);
+	
+	if (shakeScreen && lifeLostTimer <= 0)
+	{
+		if (this.gravityDown == false)
+		{
+			this.sprite.setAnimation(ANIM_DIE_ROOF);
+
+		}
+		if (this.gravityDown == true)
+		{
+			this.sprite.setAnimation(ANIM_DIE_FLOOR);
+		}
+		
+	}
 	
     // If ninja is falling down.
     if (this.gravityDown == true)
