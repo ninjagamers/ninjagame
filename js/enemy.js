@@ -3,7 +3,7 @@
 var Enemy = function(x, y) 
 {
 	this.sprite = new Sprite ("../images/enemy_sprite.png");
-	this.sprite.buildAnimation(5, 1, 64, 128, 0.05, [0, 1, 2, 3,4]);
+	this.sprite.buildAnimation(5, 1, 64, 128, 0.05, [0, 1, 2, 3, 4]);
 	this.sprite.setAnimationOffset(0, -35, -40);
 	
 	this.position = new Vector2 ();
