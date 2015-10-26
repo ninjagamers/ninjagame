@@ -78,6 +78,7 @@ var backnearX = 0;
 var backfar = document.createElement("img");
 backfar.src = "images/back_far.png";
 var backfarX = 0;
+
 // Level position
 var stageOffsetX = 0;
 
@@ -90,6 +91,8 @@ var keyboard = new Keyboard();
 var courses = []; // levels
 var levelSpeed = 150;
 var lifeLostTimer = 2;
+var dieSpriteTimer = 2;
+var returnToRun = false;
 
 // Hit Ninja
 var shakeScreen = false;
@@ -138,8 +141,14 @@ function gameStateGame(deltaTime)
 				{
 					lives -= 1;
 					lifeLostTimer = 1;
+					dieSpriteTimer -=1;
 				}
     }
+	
+	if (dieSpriteTimer <= 0)
+	{
+		returnToRun = true;
+	}
 
 	
     if (shakeScreen)
