@@ -95,6 +95,11 @@ var lifeLostTimer = 2;
 var shakeScreen = false;
 var shakeScreenTimer = 0;
 
+// speed should delete later
+var kph = 0;
+var totalTime = 0;
+
+
 function init()
 {
     // Main constructor.
@@ -185,6 +190,10 @@ function gameStateGame(deltaTime)
 		distance +=1;
 	}
 	
+	//calculating speed delete later
+	totalTime += deltaTime;
+	kph = distance / totalTime * 3600 / 1000;
+	
 	//countdown invincibility from life loss
 	lifeLostTimer -= deltaTime;
 	
@@ -201,6 +210,11 @@ function gameStateGame(deltaTime)
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
 	context.fillText(distance + "m", 540, 57);
+	
+	//draw kph
+	context.fillStyle = "#800000";
+	context.font="23px Amerigo";
+	context.fillText(Math.round(kph) + " kph", 540, 110);
 	
 	//draw money
 	context.fillStyle = "#800000";
