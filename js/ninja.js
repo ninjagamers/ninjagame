@@ -36,6 +36,7 @@ var Ninja = function(){
 
 Ninja.prototype.update = function(deltaTime)
 {
+	this.sprite.update(deltaTime);
     // If ninja is falling down.
     if (this.gravityDown)
     {
