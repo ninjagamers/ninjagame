@@ -30,6 +30,20 @@ var DEBUG_MODE = false;
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
+
+//load HUD image
+var HUD = document.createElement("img");
+HUD.src = "images/HUD.png";
+
+//load hearts for HUD
+var heartImage = document.createElement("img");
+heartImage.src = "images/heartImage.png";
+
+//HUD variables
+var lives = 3;
+var money = 0;
+var distance = 0;
+
 // Load the image to use for level tiles.
 var tileset = document.createElement("img");
 tileset.src = "tiles/tiles2.png";
@@ -75,6 +89,7 @@ var ninja = new Ninja();
 var keyboard = new Keyboard();
 var courses = []; // levels
 var levelSpeed = 150;
+var lifeLostTimer = 2;
 
 // Hit Ninja
 var shakeScreen = false;
@@ -104,13 +119,24 @@ function gameStateSplash(deltaTime)
 function gameStateGame(deltaTime)
 {
 	// no longer needed var deltaTime = getDeltaTime(); // Get Delta.
-
+	
+	//switch states if lives are out
+	if (lives <= 0)
+	{
+		gameState = STATE_GAMEOVER;
+	}
+	
     if (shakeScreen)
     {
         makeScreenShake(deltaTime);
+		if (lifeLostTimer <= 0)
+				{
+					lives -= 1;
+					lifeLostTimer = 1;
+				}
     }
 
-
+	
     if (shakeScreen)
     {
         context.fillStyle = "red"; // Clear Screen.
@@ -147,16 +173,49 @@ function gameStateGame(deltaTime)
     // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
-
+	
     if (shakeScreen)
     {
         restoreScreen();
     }
+	
+	//calculate distance
+	for (var i=0; i< (deltaTime *levelSpeed)/TILE ; i++)
+	{
+		distance +=1;
+	}
+	
+	//countdown invincibility from life loss
+	lifeLostTimer -= deltaTime;
+	
+		//draw HUD
+	context.drawImage (HUD, 505, 2)
+	
+	//draw lives
+	for (var i=0; i<lives; i++)
+	{
+		context.drawImage(heartImage, 555 + ((heartImage.width + 2) *i), 7);
+	}
+	
+	//draw distance
+	context.fillStyle = "#800000";
+	context.font="23px Amerigo";
+	context.fillText(distance + "m", 540, 57);
+	
+	//draw money
+	context.fillStyle = "#800000";
+	context.font="23px Amerigo";
+	context.fillText("$" + money, 540, 87);
 }
 
 function gameStateGameover(deltaTime)
 {
-	
+	context.fillStyle = "#9ACD32";
+	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	 
+	context.fillStyle = "#008000";
+	context.font = "50px Arial";
+	context.fillText("Game Over", 175, 250);
 }
 
 function run()
@@ -254,7 +313,6 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                     //console.log(count);
 
                     handleCollisions(dx, dy);
-
                 }
 
 
@@ -285,11 +343,13 @@ function handleCollisions(dx, dy)
     if (rect1.x < rect2.x + rect2.width &&
         rect1.x + rect1.width > rect2.x &&
         rect1.y < rect2.y + rect2.height &&
-        rect1.height + rect1.y > rect2.y) {
+        rect1.height + rect1.y > rect2.y) 
+		{
 
-        // Collision Detected
-        shakeScreen = true;
-    }
+			// Collision Detected
+			shakeScreen = true;
+			
+		}
 }
 
 

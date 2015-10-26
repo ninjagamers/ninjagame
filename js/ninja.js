@@ -18,7 +18,7 @@ var Ninja = function(){
   this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[45, 46, 47, 48, 49]);
   this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[16]);
   this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[31]);
-
+  
   for (var i=0; i<ANIM_MAX; i++)
 	{
 		this.sprite.setAnimationOffset(i, - 55, -87);
