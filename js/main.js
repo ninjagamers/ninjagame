@@ -98,7 +98,7 @@ var shakeScreenTimer = 0;
 function init()
 {
     // Main constructor.
-    addRandomCourse();
+    addEmptyCourse();
     addRandomCourse();
 
 }
@@ -361,6 +361,12 @@ function addRandomCourse()
     courses.push(newcourse);
 }
 
+// Adds a course.
+function addEmptyCourse()
+{
+    // Randomly select a course from the all courses array and add it to the courses array.
+    courses.push(l00);
+}
 function checkForClicks()
 {
     // Check for spacebar
