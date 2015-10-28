@@ -108,7 +108,6 @@ function init()
     // Main constructor.
     addEmptyCourse();
     addRandomCourse();
-
 }
 
 function gameStateSplash(deltaTime)
@@ -145,11 +144,6 @@ function gameStateGame(deltaTime)
 				}
     }
 	
-	if (dieSpriteTimer <= 0)
-	{
-		returnToRun = true;
-	}
-
 	
     if (shakeScreen)
     {
@@ -214,6 +208,7 @@ function gameStateGame(deltaTime)
 	{
 		context.drawImage(heartImage, 555 + ((heartImage.width + 2) *i), 7);
 	}
+	
 	
 	//draw distance
 	context.fillStyle = "#800000";
