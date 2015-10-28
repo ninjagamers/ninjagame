@@ -40,15 +40,22 @@ Ninja.prototype.update = function(deltaTime)
 	
 	if (shakeScreen)
 	{
-		returnToRun = false;
 		if (this.gravityDown == false)
 		{
 			this.sprite.setAnimation(ANIM_DIE_ROOF);
+			 if (dieSpriteTimer <= 0)
+			 {
+				returnToRun = true; 
+			 }
 		}
 			
 		if (this.gravityDown == true)
 		{
 			this.sprite.setAnimation(ANIM_DIE_FLOOR);
+			 if (dieSpriteTimer <= 0)
+			 {
+				returnToRun = true; 
+			 }
 		}
 	}
 
