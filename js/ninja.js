@@ -86,6 +86,16 @@ Ninja.prototype.update = function(deltaTime)
             ninja.position.y = TILE * 4.45;
         }  
 	} 
+	
+	// sound stuff
+	//if(ninja.position.y = TILE * 4.45 %% )
+	//{
+	//	sfxFootstepsV1.play();
+	//}
+	//else if(ninja.position.y = TILE * 14)
+	//{
+	//	sfxFootstepsV1.play();
+	//}
 }
 
 Ninja.prototype.draw = function()

@@ -371,6 +371,7 @@ function handleCollisions(dx, dy)
 
 			// Collision Detected
 			shakeScreen = true;
+			sfxDamage.play();
 			
 		}
 }
@@ -399,6 +400,7 @@ function checkForClicks()
 		if(wasSpacePressed == false)
 		{
 			ninja.flip();
+			sfxJump.play();
 		}
 	    wasSpacePressed = true;
 	}
