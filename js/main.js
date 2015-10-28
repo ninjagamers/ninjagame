@@ -62,14 +62,19 @@ var INIT_SCREEN_MOVEMENT_SPEED = TILE;
 
 // Gamestate constants.
 var STATE_SPLASH = 0;
-var STATE_GAME = 1;
-var STATE_GAMEOVER = 2;
+var STATE_INTRO = 1;
+var STATE_GAME = 2;
+var STATE_GAMEOVER = 3;
 // Setting gamestate to splash
 var gameState = STATE_SPLASH;
 
 // Loading splash screen image #splashimage
 var splashImage = document.createElement("img");
 // splash.src = "filename.png"
+
+//load intro screen image
+var introImage = document.createElement("img");
+introImage.src = "images/introGrass.png"
 
 // Background variables
 var backnear = document.createElement("img");
@@ -119,8 +124,43 @@ function gameStateSplash(deltaTime)
 	context.fillText("Press Space", 175, 250);
 	if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
 	{
+		gameState = STATE_INTRO;
+	}
+}
+
+function gameStateIntro (deltaTime)
+{
+	context.fillStyle = "#202020";
+	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	 
+	 context.drawImage (introImage, 435, 280)
+	 
+	  ninja.update(deltaTime);
+	  ninja.draw();
+	 
+	 context.fillStyle = "#800000"
+	context.font = "30px Candara";
+	context.fillText("Trouble comes when you least expect it...", 10, 30);
+	
+	context.fillStyle = "#D2691E"
+	context.font = "20px Candara";
+	context.fillText("As the ninja was enjoying the serenity in the forest one day,", 8, 100);
+	context.fillText("he recognised what seemed to be the smell of smoke...", 8, 130);
+	context.fillText("Soon enough the ninja was racing for survival through the forest,", 8, 175);
+	context.fillText("away from the fire, but must be careful to avoid all obstacles!", 8, 200);
+	
+	context.fillText("Be sure to grab all collectables to get the help you can receive for the ninja,", 8, 250);
+	context.fillText("and help him survive as long as possible!", 8, 275);
+	
+	context.fillStyle = "#FFFFFF"
+	context.fillText("PRESS SHIFT TO BEGIN!", 200, 400);
+	
+	if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
+	{
 		gameState = STATE_GAME;
 	}
+	
+	ninja.sprite.draw
 }
 
 function gameStateGame(deltaTime)
@@ -244,6 +284,9 @@ function run()
 	{
 		case STATE_SPLASH:
 			gameStateSplash(deltaTime);
+		break;
+		case STATE_INTRO:
+			gameStateIntro(deltaTime);
 		break;
 		case STATE_GAME:
 			gameStateGame(deltaTime);
