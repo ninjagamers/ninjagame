@@ -64,6 +64,14 @@ var METER = TILE; // 1m.
 var GRAVITY = METER * 9.8; // Default gravity.
 var INIT_SCREEN_MOVEMENT_SPEED = TILE;
 
+//drawing spikes and others
+var spikes = [];
+
+var LAYER_COUNT = 3;
+var LAYER_FLOORS = 0;
+var LAYER_WALLS = 1;
+var LAYER_OBJECT_SPIKES = 2;
+
 // Gamestate constants.
 var STATE_SPLASH = 0;
 var STATE_INTRO = 1;
@@ -118,6 +126,30 @@ function init()
     // Main constructor.
     addEmptyCourse();
     addRandomCourse();
+	
+	//draw spikes
+	idx = 0;
+	
+	
+	for(var index = 0; index < allcourses.length; index++)
+	{
+		for(var y = 0; y < allcourses[index].layers[LAYER_OBJECT_SPIKES].height; y++) 
+		{
+			for(var x = 0; x < allcourses[index].layers[LAYER_OBJECT_SPIKES].width; x++)
+			{
+				if(allcourses[index].layers[LAYER_OBJECT_SPIKES].data[idx] != 0) 
+				{
+					var px = x/32;
+					var py = y/32;
+					var e = new Spike(px, py);
+					spikes.push(e);
+				}
+				idx++;
+			}
+		} 
+	}
+	
+
 }
 
 function gameStateSplash(deltaTime)
@@ -222,11 +254,23 @@ function gameStateGame(deltaTime)
     for (index = 0; index < courses.length; ++index) {
         drawMap(courses[index], 0, Math.floor(stageOffsetX - (index * (20 * TILE))), false);
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
+		drawMap(courses[index], 2, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
     // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
+	
+	//updates spikes
+	for(var i=0; i<spikes.length; i++)
+	{
+		spikes[i].update(deltaTime);
+	}
+	
+	for (var i=0; i<spikes.length; i++)
+	{
+		spikes[i].draw()
+	}
 	
     if (shakeScreen)
     {
