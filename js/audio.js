@@ -86,26 +86,32 @@ sfxFootstepsV1 = new Howl(
 {
     urls: ["sounds/footsteps_forest.ogg"],
     buffer: true,
-    volume: .1, // may need tweaking
+    volume: 1, // may need tweaking
 	rate: 2.0, // may need tweaking
+	loop: true,
     onend: function()
     {
         isSfxPlaying = false;
     }
 });
+var sfxFootstepsV1Playing = false;
+
 
 // footsteps v2
 sfxFootstepsV2 = new Howl(
 {
     urls: ["sounds/footsteps_leaves.ogg"],
     buffer: true,
-    volume: .1, // may need tweaking
-	rate: 2.0, // may need tweaking
+    volume: 1, // may need tweaking
+	rate: 5.0, // may need tweaking
+	loop: true,
     onend: function()
     {
         isSfxPlaying = false;
     }
 });
+var sfxFootstepsV2Playing = false;
+
 
 sfxJump = new Howl(
 {

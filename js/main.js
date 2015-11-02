@@ -80,6 +80,10 @@ var STATE_GAMEOVER = 3;
 // Setting gamestate to splash
 var gameState = STATE_SPLASH;
 
+// making roof and floor limit constants for easier recall
+var FLOOR_LIMIT = TILE * 14;
+var ROOF_LIMIT = TILE * 4.45;
+
 // Loading splash screen image #splashimage
 var splashImage = document.createElement("img");
 // splash.src = "filename.png"
@@ -95,6 +99,10 @@ var backnearX = 0;
 var backfar = document.createElement("img");
 backfar.src = "images/back_far.png";
 var backfarX = 0;
+
+// SOUNDS
+var sfxFootstepsRoofPlaying = false;
+var sfxFootstepsFloorPlaying = false;
 
 // Level position
 var stageOffsetX = 0;
@@ -152,6 +160,8 @@ function init()
 
 }
 
+
+
 function gameStateSplash(deltaTime)
 {
 	// Need to get a splash screen image #splashimage to find code
@@ -201,6 +211,7 @@ function gameStateIntro (deltaTime)
 	ninja.draw ();	
 }
 
+
 function gameStateGame(deltaTime)
 {
 	// no longer needed var deltaTime = getDeltaTime(); // Get Delta.
@@ -222,6 +233,7 @@ function gameStateGame(deltaTime)
 				}
     }
 	
+	updateSounds();
 	
     if (shakeScreen)
     {
@@ -300,6 +312,7 @@ function gameStateGame(deltaTime)
 	}
 	
 	
+	
 	//draw distance
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
@@ -346,6 +359,35 @@ function run()
 		break;
 	} 
 }
+
+
+// sound update
+function updateSounds()
+{
+	// running on roof
+	if(ninja.position.y == ROOF_LIMIT && sfxFootstepsV1Playing == false)
+	{
+		sfxFootstepsV1Playing = true;
+		sfxFootstepsV1.play();	
+	}
+	if(ninja.position.y != ROOF_LIMIT)
+	{
+		sfxFootstepsV1Playing = false;
+		sfxFootstepsV1.stop();
+	}
+	// running on floor
+	if(ninja.position.y == FLOOR_LIMIT && sfxFootstepsV2Playing == false)
+	{
+		sfxFootstepsV2Playing = true;
+		sfxFootstepsV2.play();
+	}
+	if(sfxFootstepsV2Playing == true && ninja.position.y != FLOOR_LIMIT)
+	{
+		sfxFootstepsV2Playing = false;
+		sfxFootstepsV2.stop();
+	}
+}
+
 
 
 function makeScreenShake(deltaTime) {

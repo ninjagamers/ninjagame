@@ -10,6 +10,7 @@ var ANIM_DIE_FLOOR = 2;
 var ANIM_DIE_ROOF = 3;
 var ANIM_MAX = 4;
 
+
 var Ninja = function(){
 
   this.sprite = new Sprite("images/player_sprite.png");
@@ -84,9 +85,9 @@ Ninja.prototype.update = function(deltaTime)
 		ninja.position.y += GRAVITY * 2 * deltaTime;
 					
         // prevent going through floor.
-        if (ninja.position.y > TILE * 14)
+        if (ninja.position.y > FLOOR_LIMIT)
         {
-            ninja.position.y = TILE * 14;
+            ninja.position.y = FLOOR_LIMIT;
         }		
     }
     else 
@@ -95,21 +96,11 @@ Ninja.prototype.update = function(deltaTime)
         ninja.position.y -= GRAVITY * 2 * deltaTime;
 		
         // prevent going through roof.
-        if (ninja.position.y < TILE * 4.45)
+        if (ninja.position.y < ROOF_LIMIT)
         {
-            ninja.position.y = TILE * 4.45;
+            ninja.position.y = ROOF_LIMIT;
         }  
 	} 
-	
-	// sound stuff
-	//if(ninja.position.y = TILE * 4.45 %% )
-	//{
-	//	sfxFootstepsV1.play();
-	//}
-	//else if(ninja.position.y = TILE * 14)
-	//{
-	//	sfxFootstepsV1.play();
-	//}
 }
 
 Ninja.prototype.draw = function()
