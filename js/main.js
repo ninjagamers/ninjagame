@@ -39,6 +39,10 @@ HUD.src = "images/HUD.png";
 var heartImage = document.createElement("img");
 heartImage.src = "images/heartImage.png";
 
+//load for sprites
+var SPRITES = document.createElement("img");
+SPRITES.src = "images/sprites.png"
+
 //HUD variables
 var lives = 3;
 var money = 0;
@@ -98,6 +102,7 @@ var levelSpeed = 150;
 var lifeLostTimer = 2;
 var dieSpriteTimer = 2;
 var returnToRun = false;
+var beginGameTimer = 15;
 
 // Hit Ninja
 var shakeScreen = false;
@@ -157,10 +162,11 @@ function gameStateIntro (deltaTime)
 	
 	if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
 	{
-		gameState = STATE_GAME;
+		beginGameTimer -= deltaTime;
+			gameState = STATE_GAME;
 	}
 	
-	ninja.sprite.draw
+	ninja.draw ();	
 }
 
 function gameStateGame(deltaTime)

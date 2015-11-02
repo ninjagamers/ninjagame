@@ -40,22 +40,15 @@ Ninja.prototype.update = function(deltaTime)
 	
 	if (shakeScreen)
 	{
+		dieSpriteTimer -= 1;
 		if (this.gravityDown == false)
 		{
 			this.sprite.setAnimation(ANIM_DIE_ROOF);
-			 if (dieSpriteTimer <= 0)
-			 {
-				returnToRun = true; 
-			 }
 		}
 			
 		if (this.gravityDown == true)
 		{
 			this.sprite.setAnimation(ANIM_DIE_FLOOR);
-			 if (dieSpriteTimer <= 0)
-			 {
-				returnToRun = true; 
-			 }
 		}
 	}
 
@@ -68,6 +61,20 @@ Ninja.prototype.update = function(deltaTime)
 		if (this.gravityDown == false)
 		{
 			this.sprite.setAnimation(ANIM_RUN_ROOF);
+		}
+	}
+	
+	if(restoreScreen)
+	{
+		if (dieSpriteTimer <= 0 && this.gravityDown == true)
+		{
+			this.sprite.setAnimation (ANIM_RUN_FLOOR)
+			dieSpriteTimer = 2;
+		}
+		else if (dieSpriteTimer <= 0 && this.gravityDown == false)
+		{
+			this.sprite.setAnimation (ANIM_RUN_ROOF)
+			dieSpriteTimer = 2;
 		}
 	}
 	
