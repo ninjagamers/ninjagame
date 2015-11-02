@@ -227,6 +227,11 @@ function gameStateGame(deltaTime)
         makeScreenShake(deltaTime);
 		if (lifeLostTimer <= 0)
 				{
+          levelSpeed = levelSpeed - 10;
+          if (levelSpeed < 150)
+          {
+            levelSpeed = 150;
+          }
 					lives -= 1;
 					lifeLostTimer = 1;
 					dieSpriteTimer -=1;
