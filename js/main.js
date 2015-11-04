@@ -146,11 +146,11 @@ function init()
 
 	for(var index = 0; index < allcourses.length; index++)
 	{
-		for(var y = 0; y < allcourses[index].layers[LAYER_OBJECT_SPIKES].height; y++) 
+		for(var y = 0; y < allcourses[index].layers[LAYER_OBJECT_SPIKES].height; y++)
 		{
 			for(var x = 0; x < allcourses[index].layers[LAYER_OBJECT_SPIKES].width; x++)
 			{
-				if(allcourses[index].layers[LAYER_OBJECT_SPIKES].data[idx] != 0) 
+				if(allcourses[index].layers[LAYER_OBJECT_SPIKES].data[idx] != 0)
 				{
 					var px = x/32;
 					var py = y/32;
@@ -159,7 +159,7 @@ function init()
 				}
 				idx++;
 			}
-		} 
+		}
 	}
 }
 
@@ -180,12 +180,12 @@ function gameStateIntro (deltaTime)
 {
 	context.fillStyle = "#202020";
 	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	 
+
     context.drawImage (introImage, 435, 280);
-	 
+
 	ninja.update(deltaTime);
 	ninja.draw();
-	 
+
 	context.fillStyle = "#800000"
 	context.font = "30px Candara";
 	context.fillText("Trouble comes when you least expect it...", 10, 30);
@@ -209,7 +209,7 @@ function gameStateIntro (deltaTime)
 			gameState = STATE_GAME;
 	}
 
-	ninja.draw ();	
+	ninja.draw ();
 }
 
 function gameStateGame(deltaTime)
@@ -355,7 +355,7 @@ function gameStateGameover(deltaTime)
 function run()
 {
 	var deltaTime = getDeltaTime(); // Get Delta.
-	
+
 	switch(gameState)
 	{
 		case STATE_SPLASH:
@@ -370,7 +370,7 @@ function run()
 		case STATE_GAMEOVER:
 			gameStateGameover(deltaTime);
 		break;
-	} 
+	}
 }
 
 
@@ -394,7 +394,7 @@ function updateSounds()
 	if(ninja.position.y == ROOF_LIMIT && sfxFootstepsV1Playing == false)
 	{
 		sfxFootstepsV1Playing = true;
-		sfxFootstepsV1.play();	
+		sfxFootstepsV1.play();
 	}
 	else if(ninja.position.y != ROOF_LIMIT || gameState !== STATE_GAME)
 	{
@@ -505,7 +505,6 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                 {
                     context.drawImage(tileset, sx, sy, TILE, TILE, dx, dy, TILE, TILE);
                 }
-
             }
             idx++;
         }
@@ -536,22 +535,37 @@ function makeMapCollectables(level)
 
                 if ((tileIndex + 1) == 1)
                 {
-                    // TODO: testing
-                    var pui = new PowerupInvincible(dx, dy);
-                    allLevelCollect.push(pui);
+                    // Randomly pick a powerup (50 percent chance of powerup.)
+                    var draw = getRandomInt(1,2);
+                    if (draw == 2)
+                    {
+                        var rand = getRandomInt(1,3);
+                        if (rand == 1)
+                        {
+                            var pui = new PowerupInvincible(dx, dy);
+                        }
+                        else if (rand == 2)
+                        {
+                            var pui = new PowerupLife(dx, dy);
+                        }
+                        else
+                        {
+                            var pui = new PowerupCoins(dx, dy);
+                        }
+                        allLevelCollect.push(pui);
+                    }
+
                 }
                 else if ((tileIndex + 1) == 5)
                 {
-                    // TODO: testing
-                    //allLevelCollect.push(2);
-
-                    var pui = new PowerupLife(dx, dy);
-                    allLevelCollect.push(pui);
+                    // 50 percent chance of powerup.
+                    var draw = getRandomInt(1,2);
+                    if (draw == 2)
+                    {
+                        var pui = new RegularCoins(dx, dy);
+                        allLevelCollect.push(pui);
+                    }
                 }
-
-                //// TODO: testing
-                //allLevelCollect.push(3);
-
             }
             idx++;
         }
@@ -612,7 +626,7 @@ function handleCollisions(dx, dy)
     if (rect1.x < rect2.x + rect2.width &&
         rect1.x + rect1.width > rect2.x &&
         rect1.y < rect2.y + rect2.height &&
-        rect1.height + rect1.y > rect2.y) 
+        rect1.height + rect1.y > rect2.y)
 		{
 			// Collision Detected
 			shakeScreen = true;
@@ -698,6 +712,10 @@ function destroyCourses()
 function pixelToTile(pixel)
 {
     return Math.floor(pixel/TILE);
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 init(); // Run the constructor.

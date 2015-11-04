@@ -1,12 +1,12 @@
 var ANIM_MAX = 6;
 
-var PowerupInvincible = function(x, y) 
+var PowerupInvincible = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(4, 3, 32, 32, 0.05, [4, 5, 6, 7]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.05, [17, 18, 19, 20]);
 	this.sprite.setAnimationOffset(0, 0, 0);
-	
-	this.position = new Vector2 ();
+
+	this.position = new Vector2();
 	this.position.set (x, y);
 };
 
@@ -21,13 +21,13 @@ PowerupInvincible.prototype.draw = function()
 	this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
 };
 
-var PowerupLife = function(x, y) 
+var PowerupLife = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(4, 3, 32, 32, 0.05, [8, 9, 10, 11]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.05, [21, 22, 23, 24]);
 	this.sprite.setAnimationOffset(0, 0, 0);
 
-	this.position = new Vector2 ();
+	this.position = new Vector2();
 	this.position.set (x, y);
 };
 
@@ -42,13 +42,13 @@ PowerupLife.prototype.draw = function()
 	this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
 };
 
-var PowerupCoins = function(x, y) 
+var PowerupCoins = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(4, 3, 32, 32, 0.05, [0, 1, 2, 3]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.05, [9, 10, 11, 12]);
 	this.sprite.setAnimationOffset(0, -35, -40);
 
-	this.position = new Vector2 ();
+	this.position = new Vector2();
 	this.position.set (x, y);
 };
 
@@ -59,6 +59,27 @@ PowerupCoins.prototype.update = function(deltaTime)
 };
 
 PowerupCoins.prototype.draw = function()
+{
+	this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
+};
+
+var RegularCoins = function(x, y)
+{
+	this.sprite = new Sprite ("images/sprites.png");
+	this.sprite.buildAnimation(9, 3, 32, 32, 0.05, [7, 8, 9]);
+	this.sprite.setAnimationOffset(0, -35, -40);
+
+	this.position = new Vector2();
+	this.position.set (x, y);
+};
+
+RegularCoins.prototype.update = function(deltaTime)
+{
+	this.sprite.update(deltaTime);
+	this.position.x = Math.floor(this.position.x + (deltaTime * this.velocity.x));
+};
+
+RegularCoins.prototype.draw = function()
 {
 	this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
 };
