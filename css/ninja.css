@@ -12,21 +12,21 @@ p{
     font-size: 1.5em;
 }
 
-#Title {  
-  font-size: 400%;
+.Title {  
+  font-size: 450%;
   font-family: 'Modern Antiqua', "Buxton Sketch", cursive;
   color: #f3f3f3;
 }
 
-#Title2 {  
+.Title2 {  
   font-size: 250%;  
   font-family: font-family: 'Modern Antiqua', "Buxton Sketch", cursive;
   color: #f3f3f3;
 }
 
-#Title3 {  
-  font-size: 500%;  
-  font-family: "Freestyle Script", cursive;
+.Title3 {  
+  font-size: 450%;  
+  font-family: 'Modern Antiqua', "Buxton Sketch", cursive
   color: #f3f3f3;
 }
 
