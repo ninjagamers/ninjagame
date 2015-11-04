@@ -377,13 +377,26 @@ function run()
 // Sound update
 function updateSounds()
 {
+	// bgms
+	if(gameState == STATE_GAME && bgmV1Playing == false)
+	{
+		bgmV1Playing = true;
+		bgmV1.play();
+	}
+	else if( gameState !== STATE_GAME)
+	{
+		bgmV1Playing = false;
+		bgmV1.stop();
+	}
+	
+	// running sounds
 	// running on roof
 	if(ninja.position.y == ROOF_LIMIT && sfxFootstepsV1Playing == false)
 	{
 		sfxFootstepsV1Playing = true;
 		sfxFootstepsV1.play();	
 	}
-	if(ninja.position.y != ROOF_LIMIT)
+	else if(ninja.position.y != ROOF_LIMIT || gameState !== STATE_GAME)
 	{
 		sfxFootstepsV1Playing = false;
 		sfxFootstepsV1.stop();
@@ -394,7 +407,7 @@ function updateSounds()
 		sfxFootstepsV2Playing = true;
 		sfxFootstepsV2.play();
 	}
-	if(sfxFootstepsV2Playing == true && ninja.position.y != FLOOR_LIMIT)
+	else if(gameState !== STATE_GAME || ninja.position.y != FLOOR_LIMIT)
 	{
 		sfxFootstepsV2Playing = false;
 		sfxFootstepsV2.stop();
@@ -603,7 +616,7 @@ function handleCollisions(dx, dy)
 		{
 			// Collision Detected
 			shakeScreen = true;
-			sfxDamage.play();
+			sfxCollision.play();
 		}
 }
 

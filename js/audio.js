@@ -8,6 +8,7 @@ sfxFire = new Howl(
         isSfxPlaying = false;
     }
 });
+var sfxFirePlaying = false;
 
 sfxCoin = new Howl(
 {
@@ -19,23 +20,25 @@ sfxCoin = new Howl(
         isSfxPlaying = false;
     }
 });
+var sfxCoinPlaying = false;
 
 // collisions with walls
 sfxCollision = new Howl(
 {
     urls: ["sounds/collision.ogg"],
     buffer: true,
-    volume: 1, // may need tweaking
+    volume: .5, // may need tweaking
     onend: function()
     {
         isSfxPlaying = false;
     }
 });
+var sfxCollisionPlaying = false;
 
 // damage from spikes / stars
 sfxDamage = new Howl(
 {
-    urls: ["sounds/"],
+    urls: ["sounds/damage.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
     onend: function()
@@ -43,6 +46,7 @@ sfxDamage = new Howl(
         isSfxPlaying = false;
     }
 });
+var sfxDamagePlaying = false;
 
 sfxDeath = new Howl(
 {
@@ -54,19 +58,21 @@ sfxDeath = new Howl(
         isSfxPlaying = false;
     }
 });
+var sfxDeathPlaying = false;
 
 // bgm choice 1
 bgmV1 = new Howl(
 {
     urls: ["sounds/Firescape.ogg"],
     buffer: true,
-    volume: 1, // may need tweaking
+    volume: .5, // may need tweaking
 	loop: true,
     onend: function()
     {
         isSfxPlaying = false;
     }
 });
+var bgmV1Playing = false;
 
 // bgm choice 2
 bgmV2 = new Howl(
@@ -80,6 +86,7 @@ bgmV2 = new Howl(
         isSfxPlaying = false;
     }
 });
+var bgmV2Playing = false;
 
 // footsteps v1
 sfxFootstepsV1 = new Howl(
@@ -123,6 +130,7 @@ sfxJump = new Howl(
         isSfxPlaying = false;
     }
 });
+var sfxJumpPlaying = false;
 
 sfxPowerup = new Howl(
 {
@@ -134,3 +142,4 @@ sfxPowerup = new Howl(
         isSfxPlaying = false;
     }
 });
+var sfxPowerupPlaying = false;
