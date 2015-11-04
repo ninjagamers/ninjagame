@@ -8,7 +8,32 @@ canvas{
 }
 p{
     font-family: Arial, serif;
-    color: #f3f3f3;
     text-align: center;
     font-size: 1.5em;
+}
+
+#Title {  
+  font-size: 400%;
+  font-family: 'Modern Antiqua', "Buxton Sketch", cursive;
+  color: #f3f3f3;
+}
+
+#Title2 {  
+  font-size: 250%;  
+  font-family: font-family: 'Modern Antiqua', "Buxton Sketch", cursive;
+  color: #f3f3f3;
+}
+
+#Title3 {  
+  font-size: 500%;  
+  font-family: "Freestyle Script", cursive;
+  color: #f3f3f3;
+}
+
+a {
+  color: #E8A10C;
+}
+
+h1 {
+  text-align: center;
 }
