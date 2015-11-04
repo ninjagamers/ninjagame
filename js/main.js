@@ -127,6 +127,10 @@ var shakeScreenTimer = 0;
 var spikeTop = new Spike(100, 100, 0);
 var spikeBottom = new Spike(100, 100, 1);
 
+// Collectables
+var allCollectables = [];
+var allLevelCollect = [];
+
 // Speed should delete later
 var kph = 0;
 var totalTime = 0;
@@ -210,6 +214,9 @@ function gameStateIntro (deltaTime)
 
 function gameStateGame(deltaTime)
 {
+
+    console.log(allCollectables[0].length);
+
 	// No longer needed var deltaTime = getDeltaTime(); // Get Delta.
 
 	// Switch states if lives are out
@@ -270,8 +277,12 @@ function gameStateGame(deltaTime)
     for (index = 0; index < courses.length; ++index) {
         drawMap(courses[index], 0, Math.floor(stageOffsetX - (index * (20 * TILE))), false);
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
-		drawMap(courses[index], 2, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
+		//drawMap(courses[index], 2, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
+
+    // Collectables.
+    drawPowerUps();
+
 
     // Handle Ninja.
     ninja.update(deltaTime);
@@ -307,12 +318,12 @@ function gameStateGame(deltaTime)
 	lifeLostTimer -= deltaTime;
 
     // Draw HUD
-	context.drawImage (HUD, 505, 2)
+	context.drawImage(HUD, 505, 2);
 
 	// Draw lives
 	for (var i=0; i<lives; i++)
 	{
-		context.drawImage(heartImage, 555 + ((heartImage.width + 2) *i), 7);
+		context.drawImage(heartImage, 555 + ((heartImage.width + 2) * i), 7);
 	}
 
 	// Draw distance
@@ -357,7 +368,7 @@ function run()
 			gameStateGame(deltaTime);
 		break;
 		case STATE_GAMEOVER:
-			gameStateGameover(deltaTime)
+			gameStateGameover(deltaTime);
 		break;
 	} 
 }
@@ -401,8 +412,8 @@ function makeScreenShake(deltaTime) {
     {
         shakeScreenTimer += deltaTime;
         context.save();
-        var dx = Math.random()*10;
-        var dy = Math.random()*1;
+        var dx = Math.random() * 10;
+        var dy = Math.random() * 1;
         context.translate(dx, dy);
     }
 }
@@ -489,6 +500,85 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 }
 
 
+function makeMapCollectables(level)
+{
+    // Scrolling the level.
+    var maxTiles = 20;
+    var count = 0;
+
+    allLevelCollect = [];
+
+    // Draw the platform Map.
+    for(var y = 0; y < 15; y++)
+    {
+        var idx = y * level.layers[2].width;
+        for(var x = 0; x < maxTiles; x++)
+        {
+            if(level.layers[2].data[idx] != 0)
+            {
+                // Tiled map are base 1, so subtract one from the tileset id to get the correct tile.
+                var tileIndex = level.layers[2].data[idx] - 1;
+                var dx = x * TILE - Math.floor(stageOffsetX - (1 * (20 * TILE)));  // TODO: think this should be one.
+                var dy = y * TILE;
+
+                if ((tileIndex + 1) == 1)
+                {
+                    // TODO: testing
+                    var pui = new PowerupInvincible(dx, dy);
+                    allLevelCollect.push(pui);
+                }
+                else if ((tileIndex + 1) == 5)
+                {
+                    // TODO: testing
+                    //allLevelCollect.push(2);
+
+                    var pui = new PowerupLife(dx, dy);
+                    allLevelCollect.push(pui);
+                }
+
+                //// TODO: testing
+                //allLevelCollect.push(3);
+
+            }
+            idx++;
+        }
+    }
+}
+
+
+function drawPowerUps()
+{
+    for(var i = 0; i < allCollectables.length; i++)
+    {
+
+        for(var j = 0; j < allCollectables[i].length; j++)
+        {
+            //console.log(allCollectables[i][j].position.x );
+            allCollectables[i][j].draw();
+
+        }
+
+    }
+}
+
+
+
+function movePowerUpsbyOneScreen()
+{
+    for(var i = 0; i < allCollectables.length; i++)
+    {
+
+        for(var j = 0; j < allCollectables[i].length; j++)
+        {
+            console.log(allCollectables[i][j].position.x );
+
+            allCollectables[i][j].position.x -= 640;
+
+        }
+
+    }
+}
+
 
 function handleCollisions(dx, dy)
 {
@@ -523,6 +613,11 @@ function addRandomCourse()
     // Randomly select a course from the all courses array and add it to the courses array.
     var newcourse = allcourses[Math.floor(Math.random() * allcourses.length)];
     courses.push(newcourse);
+
+    // Add new collectables.
+    makeMapCollectables(newcourse);
+    allCollectables.push(allLevelCollect);
+
 }
 
 // Adds a course.
@@ -530,7 +625,16 @@ function addEmptyCourse()
 {
     // Randomly select a course from the all courses array and add it to the courses array.
     courses.push(l00);
+
+    // Collectables
+    var emptyArray = [];
+    allCollectables.push(emptyArray);
+    allCollectables.push(emptyArray);
 }
+
+// Collectables
+//function
+
 function checkForClicks()
 {
     // Check for spacebar
@@ -556,6 +660,12 @@ function destroyCourses()
     if (stageOffsetX >= 640)
     {
         courses.shift();
+        // remove collectables
+        allCollectables.shift();
+        movePowerUpsbyOneScreen();
+
+
+
         stageOffsetX = stageOffsetX - 640;
         addRandomCourse();
 
