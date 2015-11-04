@@ -117,10 +117,12 @@ var ninja = new Ninja();
 var keyboard = new Keyboard();
 var courses = []; // levels
 var levelSpeed = 150;
+var returnToRun = false;
+
+//timers
 var lifeLostTimer = 2;
 var dieSpriteTimer = 2;
-var returnToRun = false;
-var beginGameTimer = 15;
+var distanceTimer = 150;
 
 // Hit Ninja
 var shakeScreen = false;
@@ -133,10 +135,6 @@ var spikeBottom = new Spike(100, 100, 1);
 // Collectables
 var allCollectables = [];
 var allLevelCollect = [];
-
-// Speed should delete later
-var kph = 0;
-var totalTime = 0;
 
 function init()
 {
@@ -208,8 +206,7 @@ function gameStateIntro (deltaTime)
 
 	if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
 	{
-		beginGameTimer -= deltaTime;
-			gameState = STATE_GAME;
+		gameState = STATE_GAME;
 	}
 
 	ninja.draw ();
@@ -217,7 +214,6 @@ function gameStateIntro (deltaTime)
 
 function gameStateGame(deltaTime)
 {
-
     console.log(allCollectables[0].length);
 
 	// No longer needed var deltaTime = getDeltaTime(); // Get Delta.
@@ -308,21 +304,17 @@ function gameStateGame(deltaTime)
     }
 
 	// Calculate distance
-	for (var i=0; i< (deltaTime *levelSpeed)/TILE ; i++)
+	distanceTimer -= deltaTime * levelSpeed;
+	if (distanceTimer <= 0)
 	{
-		distance +=1;
+		distance += 1;
+		distanceTimer = 150;
 	}
-
-	// Calculating speed delete later
-	totalTime += deltaTime;
-	kph = distance / totalTime * 3600 / 1000;
-
+	
 	// Countdown invincibility from life loss
 	lifeLostTimer -= deltaTime;
 	
 	
-	
-
     // Draw HUD
 	context.drawImage(HUD, 505, 2);
 
@@ -336,11 +328,6 @@ function gameStateGame(deltaTime)
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
 	context.fillText(distance + "m", 540, 57);
-
-	// Draw kph
-	context.fillStyle = "#800000";
-	context.font="23px Amerigo";
-	context.fillText(Math.round(kph) + " kph", 540, 110);
 
 	// Draw money
 	context.fillStyle = "#800000";
