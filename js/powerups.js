@@ -3,7 +3,7 @@ var ANIM_MAX = 6;
 var PowerupInvincible = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 4, 32, 32, 0.15, [17, 18, 19, 20]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.1, [18, 19, 20, 21]);
 	this.sprite.setAnimationOffset(0, 0, 0);
 
 	this.position = new Vector2();
@@ -23,7 +23,7 @@ PowerupInvincible.prototype.draw = function()
 var PowerupLife = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 4, 32, 32, 0.15, [21, 22, 23, 24]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.1, [27, 28, 29, 30]);
 	this.sprite.setAnimationOffset(0, 0, 0);
 
 	this.position = new Vector2();
@@ -43,7 +43,7 @@ PowerupLife.prototype.draw = function()
 var PowerupCoins = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 4, 32, 32, 0.15, [9, 10, 11, 12]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.1, [9, 10, 11, 12]);
 	this.sprite.setAnimationOffset(0, -35, -40);
 
 	this.position = new Vector2();
@@ -63,7 +63,7 @@ PowerupCoins.prototype.draw = function()
 var RegularCoins = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 3, 32, 32, 0.15, [7, 8, 9]);
+	this.sprite.buildAnimation(9, 3, 32, 32, 0.1, [6, 7, 8]);
 	this.sprite.setAnimationOffset(0, -35, -40);
 
 	this.position = new Vector2();
