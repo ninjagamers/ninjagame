@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta  content="text/html; charset=UTF-8"  http-equiv="content-type">
+    <title>Save The Ninja</title>
+    <style  type="text/css">
+#Title {  
+  font-size: 400%;  
+  font-family: "Buxton Sketch";
+}
+
+</style></head>
+  <body>
+    <p  id="Title">Save the Ninja</p>
+    <p><br>
+    </p>
+    <canvas  id="gameCanvas"  width="640"  height="480"> </canvas>
+    <!-- Ninja Game JS -->
+    <script  src="howler/howler.min.js"></script>
+    <script  src="js/audio.js"></script>
+    <script  src="js/keyboard.js"></script>
+    <script  src="tiles/allcourses.js"></script>
+    <script  src="js/fire.js"></script>
+    <script  src="js/vector2.js"></script>
+    <script  src="js/sprite.js"></script>
+    <script  src="js/powerups.js"></script>
+    <script  src="js/spikes.js"></script>
+    <script  src="js/ninja.js"></script>
+    <script  src="js/main.js"></script>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p>How to play&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp; About the Developer/s</p>
+  </body>
+</html>
