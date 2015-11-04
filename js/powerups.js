@@ -3,7 +3,7 @@ var ANIM_MAX = 6;
 var PowerupInvincible = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 4, 32, 32, 0.05, [17, 18, 19, 20]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.15, [17, 18, 19, 20]);
 	this.sprite.setAnimationOffset(0, 0, 0);
 
 	this.position = new Vector2();
@@ -13,7 +13,6 @@ var PowerupInvincible = function(x, y)
 PowerupInvincible.prototype.update = function(deltaTime)
 {
 	this.sprite.update(deltaTime);
-	this.position.x = Math.floor(this.position.x + (deltaTime * this.velocity.x));
 };
 
 PowerupInvincible.prototype.draw = function()
@@ -24,7 +23,7 @@ PowerupInvincible.prototype.draw = function()
 var PowerupLife = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 4, 32, 32, 0.05, [21, 22, 23, 24]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.15, [21, 22, 23, 24]);
 	this.sprite.setAnimationOffset(0, 0, 0);
 
 	this.position = new Vector2();
@@ -34,7 +33,6 @@ var PowerupLife = function(x, y)
 PowerupLife.prototype.update = function(deltaTime)
 {
 	this.sprite.update(deltaTime);
-	this.position.x = Math.floor(this.position.x + (deltaTime * this.velocity.x));
 };
 
 PowerupLife.prototype.draw = function()
@@ -45,7 +43,7 @@ PowerupLife.prototype.draw = function()
 var PowerupCoins = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 4, 32, 32, 0.05, [9, 10, 11, 12]);
+	this.sprite.buildAnimation(9, 4, 32, 32, 0.15, [9, 10, 11, 12]);
 	this.sprite.setAnimationOffset(0, -35, -40);
 
 	this.position = new Vector2();
@@ -55,7 +53,6 @@ var PowerupCoins = function(x, y)
 PowerupCoins.prototype.update = function(deltaTime)
 {
 	this.sprite.update(deltaTime);
-	this.position.x = Math.floor(this.position.x + (deltaTime * this.velocity.x));
 };
 
 PowerupCoins.prototype.draw = function()
@@ -66,7 +63,7 @@ PowerupCoins.prototype.draw = function()
 var RegularCoins = function(x, y)
 {
 	this.sprite = new Sprite ("images/sprites.png");
-	this.sprite.buildAnimation(9, 3, 32, 32, 0.05, [7, 8, 9]);
+	this.sprite.buildAnimation(9, 3, 32, 32, 0.15, [7, 8, 9]);
 	this.sprite.setAnimationOffset(0, -35, -40);
 
 	this.position = new Vector2();
@@ -76,7 +73,6 @@ var RegularCoins = function(x, y)
 RegularCoins.prototype.update = function(deltaTime)
 {
 	this.sprite.update(deltaTime);
-	this.position.x = Math.floor(this.position.x + (deltaTime * this.velocity.x));
 };
 
 RegularCoins.prototype.draw = function()

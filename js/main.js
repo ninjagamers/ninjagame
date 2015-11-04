@@ -281,7 +281,7 @@ function gameStateGame(deltaTime)
     }
 
     // Collectables.
-    drawPowerUps();
+    drawPowerUps(deltaTime);
 
 
     // Handle Ninja.
@@ -388,7 +388,7 @@ function updateSounds()
 		bgmV1Playing = false;
 		bgmV1.stop();
 	}
-	
+
 	// running sounds
 	// running on roof
 	if(ninja.position.y == ROOF_LIMIT && sfxFootstepsV1Playing == false)
@@ -572,8 +572,15 @@ function makeMapCollectables(level)
     }
 }
 
+function updateCollectables(level)
+{
 
-function drawPowerUps()
+
+
+}
+
+
+function drawPowerUps(deltaTime)
 {
     for(var i = 0; i < allCollectables.length; i++)
     {
@@ -581,8 +588,8 @@ function drawPowerUps()
         for(var j = 0; j < allCollectables[i].length; j++)
         {
             //console.log(allCollectables[i][j].position.x );
+            allCollectables[i][j].update(deltaTime);
             allCollectables[i][j].draw();
-
         }
 
     }
