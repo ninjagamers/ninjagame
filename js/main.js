@@ -47,6 +47,9 @@ var lives = 3;
 var money = 0;
 var distance = 0;
 
+var overallTotal = (distance + money)
+var highScore = 0;
+
 // Load the image to use for level tiles.
 var tileset = document.createElement("img");
 tileset.src = "tiles/TMX/tiles2.png";
@@ -316,6 +319,9 @@ function gameStateGame(deltaTime)
 
 	// Countdown invincibility from life loss
 	lifeLostTimer -= deltaTime;
+	
+	
+	
 
     // Draw HUD
 	context.drawImage(HUD, 505, 2);
@@ -344,12 +350,27 @@ function gameStateGame(deltaTime)
 
 function gameStateGameover(deltaTime)
 {
+	overallTotal = distance + money
+	findHighScore();
+	
 	context.fillStyle = "#9ACD32";
 	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	context.fillStyle = "#008000";
 	context.font = "50px Arial";
 	context.fillText("Game Over", 175, 250);
+	
+	context.font = "24px Arial";
+	context.fillText("Distance:" + distance, 175, 300);
+	
+	context.font = "24px Arial";
+	context.fillText("Money:" + money, 175, 340);
+	
+	context.font = "24px Arial";
+	context.fillText("Overall score total:" + overallTotal, 175, 380);
+	
+	context.font = "26px Arial";
+	context.fillText("HIGH SCORE:" + highScore, 175, 30);
 }
 
 function run()
@@ -373,6 +394,18 @@ function run()
 	}
 }
 
+
+function findHighScore ()
+{
+	if (overallTotal <= highScore)
+	{
+		highScore = highScore
+	}
+	if (overallTotal > highScore)
+	{
+		highScore = overallTotal
+	}
+}
 
 // Sound update
 function updateSounds()
