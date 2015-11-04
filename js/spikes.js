@@ -1,4 +1,3 @@
-
 var ANIM_SPIKES_FLOOR = 0;
 var ANIM_SPIKES_ROOF = 1;
 var ANIM_MAX = 2;
@@ -21,13 +20,13 @@ Spike.prototype.update = function(deltaTime)
 		var tx = pixelToTile(this.position.x);
 		var ty = pixelToTile(this.position.y);
 		this.position.x = Math.floor(this.position.x + deltaTime);
-}
+};
 
 Spike.prototype.draw = function()
 {
 	this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
 	//context.save();
-		//context.translate(this.position.x, this.position.y);
-		//context.drawImage(this.image, -this.width/2, -this.height/2);
+	//context.translate(this.position.x, this.position.y);
+	//context.drawImage(this.image, -this.width/2, -this.height/2);
 	//context.restore();
-}
+};

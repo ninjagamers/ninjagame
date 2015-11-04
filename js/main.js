@@ -23,27 +23,26 @@ function getDeltaTime()
 }
 //-------------------- Don't modify anything above here
 
-// Debug
+// Debug (if true, show hit boxes)
 var DEBUG_MODE = false;
 
 // Canvas settings.
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
-
-//load HUD image
+// Load HUD image
 var HUD = document.createElement("img");
 HUD.src = "images/HUD.png";
 
-//load hearts for HUD
+// Load hearts for HUD
 var heartImage = document.createElement("img");
 heartImage.src = "images/heartImage.png";
 
-//load for sprites
+// Load for sprites
 var SPRITES = document.createElement("img");
 SPRITES.src = "images/sprites.png"
 
-//HUD variables
+// HUD variables
 var lives = 3;
 var money = 0;
 var distance = 0;
@@ -64,7 +63,7 @@ var METER = TILE; // 1m.
 var GRAVITY = METER * 9.8; // Default gravity.
 var INIT_SCREEN_MOVEMENT_SPEED = TILE;
 
-//drawing spikes and others
+// Drawing spikes and others
 var spikes = [];
 
 var LAYER_COUNT = 3;
@@ -80,7 +79,7 @@ var STATE_GAMEOVER = 3;
 // Setting gamestate to splash
 var gameState = STATE_SPLASH;
 
-// making roof and floor limit constants for easier recall
+// Making roof and floor limit constants for easier recall
 var FLOOR_LIMIT = TILE * 14;
 var ROOF_LIMIT = TILE * 4.45;
 
@@ -88,7 +87,7 @@ var ROOF_LIMIT = TILE * 4.45;
 var splashImage = document.createElement("img");
 // splash.src = "filename.png"
 
-//load intro screen image
+// Load intro screen image
 var introImage = document.createElement("img");
 introImage.src = "images/introGrass.png"
 
@@ -100,7 +99,7 @@ var backfar = document.createElement("img");
 backfar.src = "images/back_far.png";
 var backfarX = 0;
 
-// SOUNDS
+// Sounds
 var sfxFootstepsRoofPlaying = false;
 var sfxFootstepsFloorPlaying = false;
 
@@ -124,21 +123,19 @@ var beginGameTimer = 15;
 var shakeScreen = false;
 var shakeScreenTimer = 0;
 
-// speed should delete later
+// Speed should delete later
 var kph = 0;
 var totalTime = 0;
-
 
 function init()
 {
     // Main constructor.
     addEmptyCourse();
     addRandomCourse();
-	
-	//draw spikes
+
+	// Draw spikes
 	idx = 0;
-	
-	
+
 	for(var index = 0; index < allcourses.length; index++)
 	{
 		for(var y = 0; y < allcourses[index].layers[LAYER_OBJECT_SPIKES].height; y++) 
@@ -156,11 +153,7 @@ function init()
 			}
 		} 
 	}
-	
-
 }
-
-
 
 function gameStateSplash(deltaTime)
 {
@@ -180,66 +173,65 @@ function gameStateIntro (deltaTime)
 	context.fillStyle = "#202020";
 	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	 
-	 context.drawImage (introImage, 435, 280)
+    context.drawImage (introImage, 435, 280);
 	 
-	  ninja.update(deltaTime);
-	  ninja.draw();
+	ninja.update(deltaTime);
+	ninja.draw();
 	 
-	 context.fillStyle = "#800000"
+	context.fillStyle = "#800000"
 	context.font = "30px Candara";
 	context.fillText("Trouble comes when you least expect it...", 10, 30);
-	
+
 	context.fillStyle = "#D2691E"
 	context.font = "20px Candara";
 	context.fillText("As the ninja was enjoying the serenity in the forest one day,", 8, 100);
 	context.fillText("he recognised what seemed to be the smell of smoke...", 8, 130);
 	context.fillText("Soon enough the ninja was racing for survival through the forest,", 8, 175);
 	context.fillText("away from the fire, but must be careful to avoid all obstacles!", 8, 200);
-	
+
 	context.fillText("Be sure to grab all collectables to get the help you can receive for the ninja,", 8, 250);
 	context.fillText("and help him survive as long as possible!", 8, 275);
-	
+
 	context.fillStyle = "#FFFFFF"
 	context.fillText("PRESS SHIFT TO BEGIN!", 200, 400);
-	
+
 	if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
 	{
 		beginGameTimer -= deltaTime;
 			gameState = STATE_GAME;
 	}
-	
+
 	ninja.draw ();	
 }
 
-
 function gameStateGame(deltaTime)
 {
-	// no longer needed var deltaTime = getDeltaTime(); // Get Delta.
-	
-	//switch states if lives are out
+	// No longer needed var deltaTime = getDeltaTime(); // Get Delta.
+
+	// Switch states if lives are out
 	if (lives <= 0)
 	{
 		gameState = STATE_GAMEOVER;
 	}
-	
+
     if (shakeScreen)
     {
         makeScreenShake(deltaTime);
 		if (lifeLostTimer <= 0)
-				{
-          levelSpeed = levelSpeed - 10;
-          if (levelSpeed < 150)
-          {
-            levelSpeed = 150;
-          }
-					lives -= 1;
-					lifeLostTimer = 1;
-					dieSpriteTimer -=1;
-				}
+        {
+            levelSpeed = levelSpeed - 10;
+            if (levelSpeed < 150)
+            {
+                levelSpeed = 150;
+            }
+            lives -= 1;
+            lifeLostTimer = 1;
+            dieSpriteTimer -= 1;
+        }
     }
-	
+
 	updateSounds();
-	
+
     if (shakeScreen)
     {
         context.fillStyle = "red"; // Clear Screen.
@@ -255,9 +247,7 @@ function gameStateGame(deltaTime)
     // Handle Input
     checkForClicks();
 
-
     // Add Game logic here:
-
 
     // Move the level.
     stageOffsetX = stageOffsetX + (deltaTime * levelSpeed);
@@ -277,58 +267,56 @@ function gameStateGame(deltaTime)
     // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
-	
-	//updates spikes
+
+	// Updates spikes
 	for(var i=0; i<spikes.length; i++)
 	{
 		spikes[i].update(deltaTime);
 	}
-	
+
 	for (var i=0; i<spikes.length; i++)
 	{
 		spikes[i].draw()
 	}
-	
+
     if (shakeScreen)
     {
         restoreScreen();
     }
-	
-	//calculate distance
+
+	// Calculate distance
 	for (var i=0; i< (deltaTime *levelSpeed)/TILE ; i++)
 	{
 		distance +=1;
 	}
-	
-	//calculating speed delete later
+
+	// Calculating speed delete later
 	totalTime += deltaTime;
 	kph = distance / totalTime * 3600 / 1000;
-	
-	//countdown invincibility from life loss
+
+	// Countdown invincibility from life loss
 	lifeLostTimer -= deltaTime;
-	
-		//draw HUD
+
+    // Draw HUD
 	context.drawImage (HUD, 505, 2)
-	
-	//draw lives
+
+	// Draw lives
 	for (var i=0; i<lives; i++)
 	{
 		context.drawImage(heartImage, 555 + ((heartImage.width + 2) *i), 7);
 	}
-	
-	
-	
-	//draw distance
+
+	// Draw distance
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
 	context.fillText(distance + "m", 540, 57);
-	
-	//draw kph
+
+	// Draw kph
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
 	context.fillText(Math.round(kph) + " kph", 540, 110);
-	
-	//draw money
+
+	// Draw money
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
 	context.fillText("$" + money, 540, 87);
@@ -338,7 +326,7 @@ function gameStateGameover(deltaTime)
 {
 	context.fillStyle = "#9ACD32";
 	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	 
+
 	context.fillStyle = "#008000";
 	context.font = "50px Arial";
 	context.fillText("Game Over", 175, 250);
@@ -366,7 +354,7 @@ function run()
 }
 
 
-// sound update
+// Sound update
 function updateSounds()
 {
 	// running on roof
@@ -393,11 +381,7 @@ function updateSounds()
 	}
 }
 
-
-
 function makeScreenShake(deltaTime) {
-
-    //console.log(shakeScreenTimer);
 
     if(shakeScreenTimer > 0.2)
     {
@@ -418,7 +402,7 @@ function restoreScreen(){
     context.restore();
 }
 
-// Draw a parallax scrolling background.\
+// Draw a parallax scrolling background.
 function drawBackground(deltaTime)
 {
     context.drawImage(backfar, backfarX, 50);
@@ -438,7 +422,6 @@ function drawBackground(deltaTime)
       backnearX = backnearX + 640;
     }
 }
-
 
 function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 {
@@ -468,11 +451,9 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                 if (checkCollision && dx < 64 && dx > 0)
                 {
                     count++;
-                    //console.log(count);
 
                     handleCollisions(dx, dy);
                 }
-
 
                 // Draw Image: context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
                 context.drawImage(tileset, sx, sy, TILE, TILE, dx, dy, TILE, TILE);
@@ -484,10 +465,10 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 
 function handleCollisions(dx, dy)
 {
-    // Trap -
+    // Trap
     var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
 
-    // Ninja -
+    // Ninja
     var rect2 = {x: ninja.position.x - (ninja.width*0.8), y: ninja.position.y - (ninja.height*1.5), width: ninja.width - (ninja.width/3), height: ninja.height + 1};
 
     if (DEBUG_MODE)
@@ -503,14 +484,11 @@ function handleCollisions(dx, dy)
         rect1.y < rect2.y + rect2.height &&
         rect1.height + rect1.y > rect2.y) 
 		{
-
 			// Collision Detected
 			shakeScreen = true;
 			sfxDamage.play();
-			
 		}
 }
-
 
 // Adds a course.
 function addRandomCourse()
@@ -545,8 +523,6 @@ function checkForClicks()
 
 // Check if ninja is colliding with a trap
 
-
-
 // Adds a course.
 function destroyCourses()
 {
@@ -555,7 +531,6 @@ function destroyCourses()
         courses.shift();
         stageOffsetX = stageOffsetX - 640;
         addRandomCourse();
-
 
         if (levelSpeed < 450)
         {
@@ -567,7 +542,6 @@ function destroyCourses()
         }
 
     }
-
 }
 
 // Util Functions.
