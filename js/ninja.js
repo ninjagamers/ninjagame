@@ -24,7 +24,8 @@ var Ninja = function(){
 	}
 
 	this.position = new Vector2();
-	this.position.set(TILE * 2, TILE * 5);
+	// STARTING POSITION
+	this.position.set(TILE * 4, TILE * 5);
 
 	this.width = 64;
 	this.height = 64;

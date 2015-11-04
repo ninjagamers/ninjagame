@@ -86,6 +86,7 @@ var gameState = STATE_SPLASH;
 var FLOOR_LIMIT = TILE * 14;
 var ROOF_LIMIT = TILE * 4.45;
 
+
 // Loading splash screen image #splashimage
 var splashImage = document.createElement("img");
 // splash.src = "filename.png"
@@ -212,6 +213,10 @@ function gameStateIntro (deltaTime)
 	ninja.draw ();
 }
 
+var fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
+	
+var totalTime;
+
 function gameStateGame(deltaTime)
 {
     console.log(allCollectables[0].length);
@@ -302,7 +307,9 @@ function gameStateGame(deltaTime)
     {
         restoreScreen();
     }
-
+	
+	
+	
 	// Calculate distance
 	distanceTimer -= deltaTime * levelSpeed;
 	if (distanceTimer <= 0)
@@ -333,6 +340,19 @@ function gameStateGame(deltaTime)
 	context.fillStyle = "#800000";
 	context.font="23px Amerigo";
 	context.fillText("$" + money, 540, 87);
+	
+	// fire stuff
+	totalTime += deltaTime;
+	fireEmitter.update(deltaTime);
+	// makes fire move left and right
+	fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
+	// controls fire transparancy
+	fireEmitter.transparency = .3;
+	// how much fire spawns
+	fireEmitter.emissionRate = 200;
+	// kinda controls how high the fire grows
+	fireEmitter.maxLife = 6;
+	fireEmitter.draw();
 }
 
 function gameStateGameover(deltaTime)
@@ -433,6 +453,8 @@ function updateSounds()
 		sfxFootstepsV2.stop();
 	}
 }
+
+
 
 function makeScreenShake(deltaTime) {
 

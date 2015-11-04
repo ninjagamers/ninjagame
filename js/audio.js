@@ -94,7 +94,7 @@ sfxFootstepsV1 = new Howl(
     urls: ["sounds/footsteps_forest.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
-	rate: 2.0, // may need tweaking
+	rate: 10.0, // may need tweaking
 	loop: true,
     onend: function()
     {
