@@ -123,6 +123,10 @@ var beginGameTimer = 15;
 var shakeScreen = false;
 var shakeScreenTimer = 0;
 
+// Spikes
+var spikeTop = new Spike(100, 100, 0);
+var spikeBottom = new Spike(100, 100, 1);
+
 // Speed should delete later
 var kph = 0;
 var totalTime = 0;
@@ -230,6 +234,11 @@ function gameStateGame(deltaTime)
         }
     }
 
+    // Update spikes
+    spikeTop.update(deltaTime);
+    spikeBottom.update(deltaTime);
+
+    // Updates Sounds
 	updateSounds();
 
     if (shakeScreen)
@@ -456,12 +465,30 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                 }
 
                 // Draw Image: context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-                context.drawImage(tileset, sx, sy, TILE, TILE, dx, dy, TILE, TILE);
+
+
+                // if upspike then then animate it
+                if ((tileIndex + 1) == 7)
+                {
+
+                    spikeTop.draw(dx, dy);
+                }
+                else if ((tileIndex + 1) == 3)
+                {
+                    spikeBottom.draw(dx, dy);
+                }
+                else
+                {
+                    context.drawImage(tileset, sx, sy, TILE, TILE, dx, dy, TILE, TILE);
+                }
+
             }
             idx++;
         }
     }
 }
+
+
 
 function handleCollisions(dx, dy)
 {

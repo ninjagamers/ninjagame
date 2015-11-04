@@ -110,7 +110,7 @@ Sprite.prototype.update = function(dt) {
 			else
 			{
 				this.currentFrame-=this.playDir;
-				this.playDir = this.playDir*-1;
+				this.playDir = this.playDir * -1;
 				this.currentFrame+=this.playDir;
 			}
 		}
