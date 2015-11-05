@@ -458,7 +458,6 @@ function updateSounds()
 }
 
 
-
 function makeScreenShake(deltaTime) {
 
     if(shakeScreenTimer > 0.2)
@@ -580,8 +579,8 @@ function makeMapCollectables(level)
 
                 if ((tileIndex + 1) == 1)
                 {
-                    // Randomly pick a powerup (50 percent chance of powerup.)
-                    var draw = getRandomInt(1,2);
+                    // Randomly pick a powerup (25 percent chance of powerup.)
+                    var draw = getRandomInt(1,2, 3, 4);
                     if (draw == 2)
                     {
                         var rand = getRandomInt(1,3);
@@ -604,7 +603,7 @@ function makeMapCollectables(level)
                 else if ((tileIndex + 1) == 5)
                 {
                     // 50 percent chance of powerup.
-                    var draw = getRandomInt(1,2);
+                    var draw = getRandomInt(1,2, 3);
                     if (draw == 2)
                     {
                         var pui = new RegularCoins(dx, dy);
