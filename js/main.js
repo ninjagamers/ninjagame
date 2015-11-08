@@ -83,8 +83,8 @@ var STATE_GAMEOVER = 3;
 var gameState = STATE_SPLASH;
 
 // Making roof and floor limit constants for easier recall
-var FLOOR_LIMIT = TILE * 14;
-var ROOF_LIMIT = TILE * 4.45;
+var FLOOR_LIMIT = 360;
+var ROOF_LIMIT = 55;
 
 // making fire emitter
 var fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
@@ -220,8 +220,6 @@ var totalTime = 0;
 
 function gameStateGame(deltaTime)
 {
-    // console.log(allCollectables[0].length);
-
     // No longer needed var deltaTime = getDeltaTime(); // Get Delta.
 
     // Switch states if lives are out
@@ -271,7 +269,7 @@ function gameStateGame(deltaTime)
     // Add Game logic here:
 
     // Move the level.
-    stageOffsetX = stageOffsetX +(deltaTime * levelSpeed);
+    stageOffsetX = stageOffsetX + (deltaTime * levelSpeed);
 
     // Handle levels
 
@@ -283,12 +281,12 @@ function gameStateGame(deltaTime)
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
-    // Collectables.
-    drawPowerUps(deltaTime);
-
     // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
+
+    // Collectables.
+    drawPowerUps(deltaTime);
 
     // Updates spikes
     for(var i=0; i<spikes.length; i++)
@@ -446,7 +444,8 @@ function updateSounds()
     }
 }
 
-function makeScreenShake(deltaTime) {
+function makeScreenShake(deltaTime)
+{
 
     if(shakeScreenTimer > 0.2)
     {
@@ -463,7 +462,8 @@ function makeScreenShake(deltaTime) {
     }
 }
 
-function restoreScreen(){
+function restoreScreen()
+{
     context.restore();
 }
 
@@ -601,9 +601,25 @@ function makeMapCollectables(level)
     }
 }
 
-function updateCollectables(level)
+function intersects(itemX, itemY)
 {
+    // item
+    var x1 = itemX - stageOffsetX;
+    var y1 = itemY;
+    var w1 = 32;
+    var h1 = 32;
 
+    // ninja
+    var x2 = ninja.position.x;
+    var y2 = ninja.position.y;
+    var w2 = 70;
+    var h2 = 70;
+
+    if(y2 + h2 < y1 || x2 + w2 < x1 || x2 > x1 + w1 || y2 > y1 + h1)
+    {
+        return false;
+    }
+    return true;
 }
 
 function drawPowerUps(deltaTime)
@@ -612,20 +628,31 @@ function drawPowerUps(deltaTime)
     {
         for(var j = 0; j < allCollectables[i].length; j++)
         {
-            // console.log(allCollectables[i][j].position.x );
             allCollectables[i][j].update(deltaTime);
             allCollectables[i][j].draw();
+
+            // Pickup power up check
+            if(allCollectables[i][j].position.x - stageOffsetX < SCREEN_WIDTH/2)
+            {
+                if(intersects(allCollectables[i][j].position.x, allCollectables[i][j].position.y))
+                {
+                    // Give the correct power
+                    power(allCollectables[i][j].power);
+
+                    // Remove Power-up
+                    allCollectables[i].splice(j, 1);
+                }
+            }
         }
     }
 }
-
 function movePowerUpsbyOneScreen()
 {
     for(var i = 0; i < allCollectables.length; i++)
+
     {
         for(var j = 0; j < allCollectables[i].length; j++)
         {
-            // console.log(allCollectables[i][j].position.x);
             allCollectables[i][j].position.x -= 640;
         }
     }
@@ -637,13 +664,13 @@ function handleCollisions(dx, dy)
     var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
 
     // Ninja
-    var rect2 = {x: ninja.position.x - (ninja.width*0.8), y: ninja.position.y - (ninja.height*1.5), width: ninja.width - (ninja.width/3), height: ninja.height + 1};
+    var rect2 = {x: ninja.position.x + 2, y: ninja.position.y, width: ninja.width - 12, height: ninja.height + 1};
 
     if(DEBUG_MODE)
     {
         context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
         context.fill();
-        context.strokeStyle="green";
+        context.strokeStyle = "green";
         context.stroke();
     }
 

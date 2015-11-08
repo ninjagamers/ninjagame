@@ -20,12 +20,12 @@ var Ninja = function(){
 
     for(var i=0; i<ANIM_MAX; i++)
     {
-        this.sprite.setAnimationOffset(i, - 55, -87);
+        this.sprite.setAnimationOffset(i, 0, 0);
     }
 
     this.position = new Vector2();
     // STARTING POSITION
-    this.position.set(TILE * 4, TILE * 5);
+    this.position.set(60, 150);
 
     this.width = 64;
     this.height = 64;

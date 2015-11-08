@@ -1,13 +1,18 @@
-var ANIM_MAX = 6;
+var POWERUP_COIN = 1;
+var POWERUP_COINS = 2;
+var POWERUP_INV = 3;
+var POWERUP_LIFE = 4;
 
 var PowerupInvincible = function(x, y)
 {
-    this.sprite = new Sprite ("images/sprites.png");
+    this.sprite = new Sprite("images/sprites.png");
     this.sprite.buildAnimation(9, 4, 32, 32, 0.1, [18, 19, 20, 21]);
     this.sprite.setAnimationOffset(0, 0, 0);
 
     this.position = new Vector2();
-    this.position.set (x, y);
+    this.position.set(x, y);
+
+    this.power = POWERUP_INV;
 };
 
 PowerupInvincible.prototype.update = function(deltaTime)
@@ -22,12 +27,14 @@ PowerupInvincible.prototype.draw = function()
 
 var PowerupLife = function(x, y)
 {
-    this.sprite = new Sprite ("images/sprites.png");
+    this.sprite = new Sprite("images/sprites.png");
     this.sprite.buildAnimation(9, 4, 32, 32, 0.1, [27, 28, 29, 30]);
     this.sprite.setAnimationOffset(0, 0, 0);
 
     this.position = new Vector2();
-    this.position.set (x, y);
+    this.position.set(x, y);
+
+    this.power = POWERUP_LIFE;
 };
 
 PowerupLife.prototype.update = function(deltaTime)
@@ -42,12 +49,14 @@ PowerupLife.prototype.draw = function()
 
 var PowerupCoins = function(x, y)
 {
-    this.sprite = new Sprite ("images/sprites.png");
+    this.sprite = new Sprite("images/sprites.png");
     this.sprite.buildAnimation(9, 4, 32, 32, 0.1, [9, 10, 11, 12]);
-    this.sprite.setAnimationOffset(0, -35, -40);
+    this.sprite.setAnimationOffset(0, 0, 0);
 
     this.position = new Vector2();
-    this.position.set (x, y);
+    this.position.set(x, y);
+
+    this.power = POWERUP_COINS;
 };
 
 PowerupCoins.prototype.update = function(deltaTime)
@@ -62,12 +71,14 @@ PowerupCoins.prototype.draw = function()
 
 var RegularCoins = function(x, y)
 {
-    this.sprite = new Sprite ("images/sprites.png");
+    this.sprite = new Sprite("images/sprites.png");
     this.sprite.buildAnimation(9, 3, 32, 32, 0.1, [6, 7, 8]);
-    this.sprite.setAnimationOffset(0, -35, -40);
+    this.sprite.setAnimationOffset(0, 0, 0);
 
     this.position = new Vector2();
-    this.position.set (x, y);
+    this.position.set(x, y);
+
+    this.power = POWERUP_COIN;
 };
 
 RegularCoins.prototype.update = function(deltaTime)
@@ -79,3 +90,46 @@ RegularCoins.prototype.draw = function()
 {
     this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
 };
+
+// Run when collected a Power-up
+function power(powerType)
+{
+    if(powerType == POWERUP_COIN){
+        addOneCoin();
+    }
+    else if(powerType == POWERUP_COINS)
+    {
+        addManyCoins();
+    }
+    else if(powerType == POWERUP_INV)
+    {
+        invincibility();
+    }
+    else if(powerType == POWERUP_LIFE)
+    {
+        addLife();
+    }
+}
+
+function addOneCoin()
+{
+    money += 1;
+}
+
+function addManyCoins()
+{
+    money += 10;
+}
+
+function invincibility()
+{
+    // TODO: Add INV power
+}
+
+function addLife()
+{
+    if(lives <3)
+    {
+        lives += 1;
+    }
+}
