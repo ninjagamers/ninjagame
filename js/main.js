@@ -104,6 +104,9 @@ var backnearX = 0;
 var backfar = document.createElement("img");
 backfar.src = "images/back_far.png";
 var backfarX = 0;
+var backDistance = document.createElement("img");
+backDistance.src = "images/back_distance.png";
+backDistanceX = 0;
 
 // Sounds
 var sfxFootstepsRoofPlaying = false;
@@ -470,13 +473,16 @@ function restoreScreen()
 // Draw a parallax scrolling background.
 function drawBackground(deltaTime)
 {
-    context.drawImage(backfar, backfarX, 50);
-    context.drawImage(backfar, backfarX + 640, 50);
-    context.drawImage(backnear, backnearX, 50);
+	context.drawImage(backDistance, backDistanceX, 50);
+    context.drawImage(backDistance, backDistanceX + 640, 50);
+	context.drawImage(backnear, backnearX, 50);
     context.drawImage(backnear, backnearX + 640, 50);
+	context.drawImage(backfar, backfarX, 50);
+    context.drawImage(backfar, backfarX + 640, 50);
 
-    backfarX = backfarX - (deltaTime * levelSpeed /4);
-    backnearX = backnearX - (deltaTime * levelSpeed /3);
+    backDistanceX = backDistanceX - (deltaTime * levelSpeed /40);
+	backfarX = backfarX - (deltaTime * levelSpeed /4);
+    backnearX = backnearX - (deltaTime * levelSpeed /8);
 
     if(backfarX < -640)
     {
@@ -485,6 +491,10 @@ function drawBackground(deltaTime)
     if(backnearX < -640)
     {
       backnearX = backnearX + 640;
+    }
+	 if (backDistanceX < -640)
+    {
+      backDistanceX = backDistanceX + 640;
     }
 }
 
