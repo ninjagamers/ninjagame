@@ -294,11 +294,7 @@ function gameStateGame(deltaTime)
     for(var i=0; i<spikes.length; i++)
     {
         spikes[i].update(deltaTime);
-    }
-
-    for(var i=0; i<spikes.length; i++)
-    {
-        spikes[i].draw()
+        spikes[i].draw();
     }
 
     if(shakeScreen)
@@ -570,7 +566,7 @@ function makeMapCollectables(level)
                 if((tileIndex + 1) == 1)
                 {
                     // Randomly pick a powerup (25 percent chance of powerup)
-                    var draw = getRandomInt(1, 2, 3, 4);
+                    var draw = getRandomInt(1, 4);
                     if(draw == 2)
                     {
                         var rand = getRandomInt(1, 3);
@@ -592,7 +588,7 @@ function makeMapCollectables(level)
                 else if((tileIndex + 1) == 5)
                 {
                     // 50 percent chance of powerup.
-                    var draw = getRandomInt(1, 2, 3);
+                    var draw = getRandomInt(1, 3);
                     if(draw == 2)
                     {
                         var pui = new RegularCoins(dx, dy);
@@ -733,7 +729,7 @@ function destroyCourses()
     }
 }
 
-// Util Functions.
+// Util Functions
 function pixelToTile(pixel)
 {
     return Math.floor(pixel/TILE);
@@ -743,7 +739,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-init(); // Run the constructor.
+init(); // Run the constructor
 
 //-------------------- Don't modify anything below here
 // This code will set up the framework so that the 'run' function is called 60 times per second.
@@ -752,12 +748,12 @@ init(); // Run the constructor.
     var onEachFrame;
     if(window.requestAnimationFrame) {
     onEachFrame = function(cb) {
-        var _cb = function() { cb(); window.requestAnimationFrame(_cb); }
+        var _cb = function() { cb(); window.requestAnimationFrame(_cb);};
         _cb();
     };
     } else if(window.mozRequestAnimationFrame) {
     onEachFrame = function(cb) {
-        var _cb = function() { cb(); window.mozRequestAnimationFrame(_cb); }
+        var _cb = function() { cb(); window.mozRequestAnimationFrame(_cb);};
         _cb();
     };
     } else {
