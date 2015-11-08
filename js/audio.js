@@ -66,7 +66,7 @@ bgmV1 = new Howl(
     urls: ["sounds/Firescape.ogg"],
     buffer: true,
     volume: .5, // may need tweaking
-	loop: true,
+    loop: true,
     onend: function()
     {
         isSfxPlaying = false;
@@ -80,7 +80,7 @@ bgmV2 = new Howl(
     urls: ["sounds/Rise_of_spirit.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
-	loop: true,
+    loop: true,
     onend: function()
     {
         isSfxPlaying = false;
@@ -94,8 +94,8 @@ sfxFootstepsV1 = new Howl(
     urls: ["sounds/footsteps_forest.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
-	rate: 10.0, // may need tweaking
-	loop: true,
+    rate: 10.0, // may need tweaking
+    loop: true,
     onend: function()
     {
         isSfxPlaying = false;
@@ -110,8 +110,8 @@ sfxFootstepsV2 = new Howl(
     urls: ["sounds/footsteps_leaves.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
-	rate: 5.0, // may need tweaking
-	loop: true,
+    rate: 5.0, // may need tweaking
+    loop: true,
     onend: function()
     {
         isSfxPlaying = false;

@@ -40,14 +40,14 @@ heartImage.src = "images/heartImage.png";
 
 // Load for sprites
 var SPRITES = document.createElement("img");
-SPRITES.src = "images/sprites.png"
+SPRITES.src = "images/sprites.png";
 
 // HUD variables
 var lives = 3;
 var money = 0;
 var distance = 0;
 
-var overallTotal = (distance + money)
+var overallTotal = (distance + money);
 var highScore = 0;
 
 // Load the image to use for level tiles.
@@ -145,99 +145,98 @@ function init()
     addEmptyCourse();
     addRandomCourse();
 
-	// Draw spikes
-	idx = 0;
+    // Draw spikes
+    idx = 0;
 
-	for(var index = 0; index < allcourses.length; index++)
-	{
-		for(var y = 0; y < allcourses[index].layers[LAYER_OBJECT_SPIKES].height; y++)
-		{
-			for(var x = 0; x < allcourses[index].layers[LAYER_OBJECT_SPIKES].width; x++)
-			{
-				if(allcourses[index].layers[LAYER_OBJECT_SPIKES].data[idx] != 0)
-				{
-					var px = x/32;
-					var py = y/32;
-					var e = new Spike(px, py);
-					spikes.push(e);
-				}
-				idx++;
-			}
-		}
-	}
+    for(var index = 0; index < allcourses.length; index++)
+    {
+        for(var y = 0; y < allcourses[index].layers[LAYER_OBJECT_SPIKES].height; y++)
+        {
+            for(var x = 0; x < allcourses[index].layers[LAYER_OBJECT_SPIKES].width; x++)
+            {
+                if(allcourses[index].layers[LAYER_OBJECT_SPIKES].data[idx] != 0)
+                {
+                    var px = x/32;
+                    var py = y/32;
+                    var e = new Spike(px, py);
+                    spikes.push(e);
+                }
+                idx++;
+            }
+        }
+    }
 }
 
 function gameStateSplash(deltaTime)
 {
-	// Need to get a splash screen image #splashimage to find code
-	// context.drawImage(splashImage, 0, 0);
-	context.fillStyle = "#000000";
-	context.font = "50px Arial";
-	context.fillText("Press Space", 175, 250);
-	if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
-	{
-		gameState = STATE_INTRO;
-	}
+    // Need to get a splash screen image #splashimage to find code
+    // context.drawImage(splashImage, 0, 0);
+    context.fillStyle = "#000000";
+    context.font = "50px Arial";
+    context.fillText("Press Space", 175, 250);
+    if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
+    {
+        gameState = STATE_INTRO;
+    }
 }
 
-function gameStateIntro (deltaTime)
+function gameStateIntro(deltaTime)
 {
-	context.fillStyle = "#202020";
-	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    context.fillStyle = "#202020";
+    context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    context.drawImage (introImage, 435, 280);
+    context.drawImage(introImage, 435, 280);
 
-	ninja.update(deltaTime);
-	ninja.draw();
+    ninja.update(deltaTime);
+    ninja.draw();
 
-	context.fillStyle = "#800000"
-	context.font = "30px Candara";
-	context.fillText("Trouble comes when you least expect it...", 10, 30);
+    context.fillStyle = "#800000";
+    context.font = "30px Candara";
+    context.fillText("Trouble comes when you least expect it...", 10, 30);
 
-	context.fillStyle = "#D2691E"
-	context.font = "20px Candara";
-	context.fillText("As the ninja was enjoying the serenity in the forest one day,", 8, 100);
-	context.fillText("he recognised what seemed to be the smell of smoke...", 8, 130);
-	context.fillText("Soon enough the ninja was racing for survival through the forest,", 8, 175);
-	context.fillText("away from the fire, but must be careful to avoid all obstacles!", 8, 200);
+    context.fillStyle = "#D2691E";
+    context.font = "20px Candara";
+    context.fillText("As the ninja was enjoying the serenity in the forest one day,", 8, 100);
+    context.fillText("he recognised what seemed to be the smell of smoke...", 8, 130);
+    context.fillText("Soon enough the ninja was racing for survival through the forest,", 8, 175);
+    context.fillText("away from the fire, but must be careful to avoid all obstacles!", 8, 200);
 
-	context.fillText("Be sure to grab all collectables to get the help you can receive for the ninja,", 8, 250);
-	context.fillText("and help him survive as long as possible!", 8, 275);
+    context.fillText("Be sure to grab all collectables to get the help you can receive for the ninja,", 8, 250);
+    context.fillText("and help him survive as long as possible!", 8, 275);
 
-	context.fillStyle = "#FFFFFF"
-	context.fillText("PRESS SHIFT TO BEGIN!", 200, 400);
+    context.fillStyle = "#FFFFFF";
+    context.fillText("PRESS SHIFT TO BEGIN!", 200, 400);
 
-	if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
-	{
-		gameState = STATE_GAME;
-	}
+    if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
+    {
+        gameState = STATE_GAME;
+    }
 
-	ninja.draw ();
+    ninja.draw();
 }
 
 
-	
 var totalTime = 0;
 
 function gameStateGame(deltaTime)
 {
-    console.log(allCollectables[0].length);
+    // console.log(allCollectables[0].length);
 
-	// No longer needed var deltaTime = getDeltaTime(); // Get Delta.
+    // No longer needed var deltaTime = getDeltaTime(); // Get Delta.
 
-	// Switch states if lives are out
-	if (lives <= 0)
-	{
-		gameState = STATE_GAMEOVER;
-	}
+    // Switch states if lives are out
+    if(lives <= 0)
+    {
+        gameState = STATE_GAMEOVER;
+    }
 
-    if (shakeScreen)
+    if(shakeScreen)
     {
         makeScreenShake(deltaTime);
-		if (lifeLostTimer <= 0)
+        if(lifeLostTimer <= 0)
         {
             levelSpeed = levelSpeed - 10;
-            if (levelSpeed < 150)
+            if(levelSpeed < 150)
             {
                 levelSpeed = 150;
             }
@@ -252,9 +251,9 @@ function gameStateGame(deltaTime)
     spikeBottom.update(deltaTime);
 
     // Updates Sounds
-	updateSounds();
+    updateSounds();
 
-    if (shakeScreen)
+    if(shakeScreen)
     {
         context.fillStyle = "red"; // Clear Screen.
     }
@@ -265,198 +264,191 @@ function gameStateGame(deltaTime)
 
     context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    drawBackground(deltaTime)
+    drawBackground(deltaTime);
     // Handle Input
     checkForClicks();
 
     // Add Game logic here:
 
     // Move the level.
-    stageOffsetX = stageOffsetX + (deltaTime * levelSpeed);
+    stageOffsetX = stageOffsetX +(deltaTime * levelSpeed);
 
     // Handle levels
 
     // Draw ALL the maps.
     destroyCourses();
-
     var index;
-    for (index = 0; index < courses.length; ++index) {
+    for(index = 0; index < courses.length; ++index) {
         drawMap(courses[index], 0, Math.floor(stageOffsetX - (index * (20 * TILE))), false);
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
-		//drawMap(courses[index], 2, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
     // Collectables.
     drawPowerUps(deltaTime);
 
-
     // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
 
-	// Updates spikes
-	for(var i=0; i<spikes.length; i++)
-	{
-		spikes[i].update(deltaTime);
-	}
+    // Updates spikes
+    for(var i=0; i<spikes.length; i++)
+    {
+        spikes[i].update(deltaTime);
+    }
 
-	for (var i=0; i<spikes.length; i++)
-	{
-		spikes[i].draw()
-	}
+    for(var i=0; i<spikes.length; i++)
+    {
+        spikes[i].draw()
+    }
 
-    if (shakeScreen)
+    if(shakeScreen)
     {
         restoreScreen();
     }
-	
-	
-	
-	// Calculate distance
-	distanceTimer -= deltaTime * levelSpeed;
-	if (distanceTimer <= 0)
-	{
-		distance += 1;
-		distanceTimer = 150;
-	}
-	
-	// Countdown invincibility from life loss
-	lifeLostTimer -= deltaTime;
-	
-	
+
+    // Calculate distance
+    distanceTimer -= deltaTime * levelSpeed;
+    if(distanceTimer <= 0)
+    {
+        distance += 1;
+        distanceTimer = 150;
+    }
+
+    // Countdown invincibility from life loss
+    lifeLostTimer -= deltaTime;
+
+
     // Draw HUD
-	context.drawImage(HUD, 505, 2);
+    context.drawImage(HUD, 505, 2);
 
-	// Draw lives
-	for (var i=0; i<lives; i++)
-	{
-		context.drawImage(heartImage, 555 + ((heartImage.width + 2) * i), 7);
-	}
+    // Draw lives
+    for(var i=0; i<lives; i++)
+    {
+        context.drawImage(heartImage, 555 + ((heartImage.width + 2) * i), 7);
+    }
 
-	// Draw distance
-	context.fillStyle = "#800000";
-	context.font="23px Amerigo";
-	context.fillText(distance + "m", 540, 57);
+    // Draw distance
+    context.fillStyle = "#800000";
+    context.font="23px Amerigo";
+    context.fillText(distance + "m", 540, 57);
 
-	// Draw money
-	context.fillStyle = "#800000";
-	context.font="23px Amerigo";
-	context.fillText("$" + money, 540, 87);
-	
-	// fire stuff
-	totalTime += deltaTime;
-	fireEmitter.update(deltaTime);
-	// makes fire move left and right
-	fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
-	fireEmitter.position.y = 400;
-	// controls fire transparancy
-	fireEmitter.transparency = .3;
-	// how much fire spawns
-	fireEmitter.emissionRate = 200;
-	// kinda controls how high the fire grows
-	fireEmitter.maxLife = 6;
-	fireEmitter.draw();
+    // Draw money
+    context.fillStyle = "#800000";
+    context.font="23px Amerigo";
+    context.fillText("$" + money, 540, 87);
+
+    // Fire stuff
+    totalTime += deltaTime;
+    fireEmitter.update(deltaTime);
+    // makes fire move left and right
+    fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
+    fireEmitter.position.y = 400;
+    // controls fire transparancy
+    fireEmitter.transparency = .3;
+    // how much fire spawns
+    fireEmitter.emissionRate = 200;
+    // kinda controls how high the fire grows
+    fireEmitter.maxLife = 6;
+    fireEmitter.draw();
 }
 
 function gameStateGameover(deltaTime)
 {
-	overallTotal = distance + money
-	findHighScore();
-	
-	context.fillStyle = "#9ACD32";
-	context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    overallTotal = distance + money;
+    findHighScore();
 
-	context.fillStyle = "#008000";
-	context.font = "50px Arial";
-	context.fillText("Game Over", 175, 250);
-	
-	context.font = "24px Arial";
-	context.fillText("Distance:" + distance, 175, 300);
-	
-	context.font = "24px Arial";
-	context.fillText("Money:" + money, 175, 340);
-	
-	context.font = "24px Arial";
-	context.fillText("Overall score total:" + overallTotal, 175, 380);
-	
-	context.font = "26px Arial";
-	context.fillText("HIGH SCORE:" + highScore, 175, 30);
+    context.fillStyle = "#9ACD32";
+    context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    context.fillStyle = "#008000";
+    context.font = "50px Arial";
+    context.fillText("Game Over", 175, 250);
+
+    context.font = "24px Arial";
+    context.fillText("Distance:" + distance, 175, 300);
+
+    context.font = "24px Arial";
+    context.fillText("Money:" + money, 175, 340);
+
+    context.font = "24px Arial";
+    context.fillText("Overall score total:" + overallTotal, 175, 380);
+
+    context.font = "26px Arial";
+    context.fillText("HIGH SCORE:" + highScore, 175, 30);
 }
 
 function run()
 {
-	var deltaTime = getDeltaTime(); // Get Delta.
+    var deltaTime = getDeltaTime(); // Get Delta.
 
-	switch(gameState)
-	{
-		case STATE_SPLASH:
-			gameStateSplash(deltaTime);
-		break;
-		case STATE_INTRO:
-			gameStateIntro(deltaTime);
-		break;
-		case STATE_GAME:
-			gameStateGame(deltaTime);
-		break;
-		case STATE_GAMEOVER:
-			gameStateGameover(deltaTime);
-		break;
-	}
+    switch(gameState)
+    {
+        case STATE_SPLASH:
+            gameStateSplash(deltaTime);
+        break;
+        case STATE_INTRO:
+            gameStateIntro(deltaTime);
+        break;
+        case STATE_GAME:
+            gameStateGame(deltaTime);
+        break;
+        case STATE_GAMEOVER:
+            gameStateGameover(deltaTime);
+        break;
+    }
 }
 
-
-function findHighScore ()
+function findHighScore()
 {
-	if (overallTotal <= highScore)
-	{
-		highScore = highScore
-	}
-	if (overallTotal > highScore)
-	{
-		highScore = overallTotal
-	}
+    if(overallTotal <= highScore)
+    {
+        highScore = highScore
+    }
+    if(overallTotal > highScore)
+    {
+        highScore = overallTotal
+    }
 }
 
 // Sound update
 function updateSounds()
 {
-	// bgms
-	if(gameState == STATE_GAME && bgmV1Playing == false)
-	{
-		bgmV1Playing = true;
-		bgmV1.play();
-	}
-	else if( gameState !== STATE_GAME)
-	{
-		bgmV1Playing = false;
-		bgmV1.stop();
-	}
+    // bgms
+    if(gameState == STATE_GAME && bgmV1Playing == false)
+    {
+        bgmV1Playing = true;
+        bgmV1.play();
+    }
+    else if( gameState !== STATE_GAME)
+    {
+        bgmV1Playing = false;
+        bgmV1.stop();
+    }
 
-	// running sounds
-	// running on roof
-	if(ninja.position.y == ROOF_LIMIT && sfxFootstepsV1Playing == false)
-	{
-		sfxFootstepsV1Playing = true;
-		sfxFootstepsV1.play();
-	}
-	else if(ninja.position.y != ROOF_LIMIT || gameState !== STATE_GAME)
-	{
-		sfxFootstepsV1Playing = false;
-		sfxFootstepsV1.stop();
-	}
-	// running on floor
-	if(ninja.position.y == FLOOR_LIMIT && sfxFootstepsV2Playing == false)
-	{
-		sfxFootstepsV2Playing = true;
-		sfxFootstepsV2.play();
-	}
-	else if(gameState !== STATE_GAME || ninja.position.y != FLOOR_LIMIT)
-	{
-		sfxFootstepsV2Playing = false;
-		sfxFootstepsV2.stop();
-	}
+    // Running sounds
+    // Running on roof
+    if(ninja.position.y == ROOF_LIMIT && sfxFootstepsV1Playing == false)
+    {
+        sfxFootstepsV1Playing = true;
+        sfxFootstepsV1.play();
+    }
+    else if(ninja.position.y != ROOF_LIMIT || gameState !== STATE_GAME)
+    {
+        sfxFootstepsV1Playing = false;
+        sfxFootstepsV1.stop();
+    }
+    // running on floor
+    if(ninja.position.y == FLOOR_LIMIT && sfxFootstepsV2Playing == false)
+    {
+        sfxFootstepsV2Playing = true;
+        sfxFootstepsV2.play();
+    }
+    else if(gameState !== STATE_GAME || ninja.position.y != FLOOR_LIMIT)
+    {
+        sfxFootstepsV2Playing = false;
+        sfxFootstepsV2.stop();
+    }
 }
-
 
 function makeScreenShake(deltaTime) {
 
@@ -490,11 +482,11 @@ function drawBackground(deltaTime)
     backfarX = backfarX - (deltaTime * levelSpeed /4);
     backnearX = backnearX - (deltaTime * levelSpeed /3);
 
-    if (backfarX < -640)
+    if(backfarX < -640)
     {
       backfarX = backfarX + 640;
     }
-    if (backnearX < -640)
+    if(backnearX < -640)
     {
       backnearX = backnearX + 640;
     }
@@ -525,7 +517,7 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                 var dx = x * TILE - curStageOffsetX;
                 var dy = y * TILE;
 
-                if (checkCollision && dx < 64 && dx > 0)
+                if(checkCollision && dx < 64 && dx > 0)
                 {
                     count++;
 
@@ -534,14 +526,13 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 
                 // Draw Image: context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-
-                // if upspike then then animate it
-                if ((tileIndex + 1) == 7)
+                // If upspike then then animate it.
+                if((tileIndex + 1) == 7)
                 {
 
                     spikeTop.draw(dx, dy);
                 }
-                else if ((tileIndex + 1) == 3)
+                else if((tileIndex + 1) == 3)
                 {
                     spikeBottom.draw(dx, dy);
                 }
@@ -554,7 +545,6 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
         }
     }
 }
-
 
 function makeMapCollectables(level)
 {
@@ -577,18 +567,18 @@ function makeMapCollectables(level)
                 var dx = x * TILE - Math.floor(stageOffsetX - (1 * (20 * TILE)));  // TODO: think this should be one.
                 var dy = y * TILE;
 
-                if ((tileIndex + 1) == 1)
+                if((tileIndex + 1) == 1)
                 {
-                    // Randomly pick a powerup (25 percent chance of powerup.)
-                    var draw = getRandomInt(1,2, 3, 4);
-                    if (draw == 2)
+                    // Randomly pick a powerup (25 percent chance of powerup)
+                    var draw = getRandomInt(1, 2, 3, 4);
+                    if(draw == 2)
                     {
-                        var rand = getRandomInt(1,3);
-                        if (rand == 1)
+                        var rand = getRandomInt(1, 3);
+                        if(rand == 1)
                         {
                             var pui = new PowerupInvincible(dx, dy);
                         }
-                        else if (rand == 2)
+                        else if(rand == 2)
                         {
                             var pui = new PowerupLife(dx, dy);
                         }
@@ -598,13 +588,12 @@ function makeMapCollectables(level)
                         }
                         allLevelCollect.push(pui);
                     }
-
                 }
-                else if ((tileIndex + 1) == 5)
+                else if((tileIndex + 1) == 5)
                 {
                     // 50 percent chance of powerup.
-                    var draw = getRandomInt(1,2, 3);
-                    if (draw == 2)
+                    var draw = getRandomInt(1, 2, 3);
+                    if(draw == 2)
                     {
                         var pui = new RegularCoins(dx, dy);
                         allLevelCollect.push(pui);
@@ -619,44 +608,32 @@ function makeMapCollectables(level)
 function updateCollectables(level)
 {
 
-
-
 }
-
 
 function drawPowerUps(deltaTime)
 {
     for(var i = 0; i < allCollectables.length; i++)
     {
-
         for(var j = 0; j < allCollectables[i].length; j++)
         {
-            //console.log(allCollectables[i][j].position.x );
+            // console.log(allCollectables[i][j].position.x );
             allCollectables[i][j].update(deltaTime);
             allCollectables[i][j].draw();
         }
-
     }
 }
-
-
 
 function movePowerUpsbyOneScreen()
 {
     for(var i = 0; i < allCollectables.length; i++)
     {
-
         for(var j = 0; j < allCollectables[i].length; j++)
         {
-            console.log(allCollectables[i][j].position.x );
-
+            // console.log(allCollectables[i][j].position.x);
             allCollectables[i][j].position.x -= 640;
-
         }
-
     }
 }
-
 
 function handleCollisions(dx, dy)
 {
@@ -666,7 +643,7 @@ function handleCollisions(dx, dy)
     // Ninja
     var rect2 = {x: ninja.position.x - (ninja.width*0.8), y: ninja.position.y - (ninja.height*1.5), width: ninja.width - (ninja.width/3), height: ninja.height + 1};
 
-    if (DEBUG_MODE)
+    if(DEBUG_MODE)
     {
         context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
         context.fill();
@@ -674,15 +651,15 @@ function handleCollisions(dx, dy)
         context.stroke();
     }
 
-    if (rect1.x < rect2.x + rect2.width &&
+    if(rect1.x < rect2.x + rect2.width &&
         rect1.x + rect1.width > rect2.x &&
         rect1.y < rect2.y + rect2.height &&
         rect1.height + rect1.y > rect2.y)
-		{
-			// Collision Detected
-			shakeScreen = true;
-			sfxCollision.play();
-		}
+        {
+            // Collision Detected
+            shakeScreen = true;
+            sfxCollision.play();
+        }
 }
 
 // Adds a course.
@@ -711,21 +688,21 @@ function addEmptyCourse()
 }
 
 // Collectables
-//function
+// function
 
 function checkForClicks()
 {
     // Check for spacebar
     if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
     {
-		//tweaked code to flip on keydown to reduce delay
-		if(wasSpacePressed == false)
-		{
-			ninja.flip();
-			sfxJump.play();
-		}
-	    wasSpacePressed = true;
-	}
+        //tweaked code to flip on keydown to reduce delay
+        if(wasSpacePressed == false)
+        {
+            ninja.flip();
+            sfxJump.play();
+        }
+        wasSpacePressed = true;
+    }
     else
     wasSpacePressed = false;
 }
@@ -735,19 +712,17 @@ function checkForClicks()
 // Adds a course.
 function destroyCourses()
 {
-    if (stageOffsetX >= 640)
+    if(stageOffsetX >= 640)
     {
         courses.shift();
-        // remove collectables
+        // Remove collectables
         allCollectables.shift();
         movePowerUpsbyOneScreen();
-
-
 
         stageOffsetX = stageOffsetX - 640;
         addRandomCourse();
 
-        if (levelSpeed < 450)
+        if(levelSpeed < 450)
         {
             levelSpeed = levelSpeed + 25; // increase speed.
         }
@@ -755,7 +730,6 @@ function destroyCourses()
         {
             levelSpeed = 450;
         }
-
     }
 }
 
@@ -775,22 +749,22 @@ init(); // Run the constructor.
 // This code will set up the framework so that the 'run' function is called 60 times per second.
 // We have a some options to fall back on in case the browser doesn't support our preferred method.
 (function() {
-  var onEachFrame;
-  if (window.requestAnimationFrame) {
+    var onEachFrame;
+    if(window.requestAnimationFrame) {
     onEachFrame = function(cb) {
-      var _cb = function() { cb(); window.requestAnimationFrame(_cb); }
-      _cb();
+        var _cb = function() { cb(); window.requestAnimationFrame(_cb); }
+        _cb();
     };
-  } else if (window.mozRequestAnimationFrame) {
+    } else if(window.mozRequestAnimationFrame) {
     onEachFrame = function(cb) {
-      var _cb = function() { cb(); window.mozRequestAnimationFrame(_cb); }
-      _cb();
+        var _cb = function() { cb(); window.mozRequestAnimationFrame(_cb); }
+        _cb();
     };
-  } else {
-    onEachFrame = function(cb) {
-      setInterval(cb, 1000 / 60);
+    } else {
+        onEachFrame = function(cb) {
+            setInterval(cb, 1000 / 60);
+        }
     }
-  }
-  window.onEachFrame = onEachFrame;
+    window.onEachFrame = onEachFrame;
 })();
 window.onEachFrame(run);
