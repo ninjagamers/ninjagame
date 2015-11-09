@@ -91,23 +91,30 @@ RegularCoins.prototype.draw = function()
     this.sprite.draw(context, this.position.x - stageOffsetX, this.position.y);
 };
 
+// need to check if sounds are working
 // Run when collected a Power-up
 function power(powerType)
 {
-    if(powerType == POWERUP_COIN){
+    if(powerType == POWERUP_COIN)
+	{
         addOneCoin();
+		sfxCoin.play();
     }
     else if(powerType == POWERUP_COINS)
     {
         addManyCoins();
+		sfxCoin.play();
+		sfxPowerup.play();
     }
     else if(powerType == POWERUP_INV)
     {
         invincibility();
+		sfxPowerup.play();
     }
     else if(powerType == POWERUP_LIFE)
     {
         addLife();
+		sfxPowerup.play();
     }
 }
 
@@ -121,9 +128,11 @@ function addManyCoins()
     money += 10;
 }
 
-function invincibility()
+function invincibility(deltaTime)
 {
-    // TODO: Add INV power
+	// can change if wanted
+	invincibilityTimer = 3.5;
+	ninjaInvincible = true;
 }
 
 function addLife()

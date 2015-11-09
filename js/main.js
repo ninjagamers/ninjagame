@@ -88,6 +88,8 @@ var ROOF_LIMIT = 55;
 
 // making fire emitter
 var fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
+var totalTime = 0;
+var invincibilityEmitter = createBurstEmitter("images/heartImage.png",  -20, SCREEN_HEIGHT - 100);
 
 // Loading splash screen image
 var splashImage = document.createElement("img");
@@ -133,10 +135,12 @@ var returnToRun = false;
 var lifeLostTimer = 2;
 var dieSpriteTimer = 2;
 var distanceTimer = 150;
+var invincibilityTimer = 0;
 
 // Hit Ninja
 var shakeScreen = false;
 var shakeScreenTimer = 0;
+var ninjaInvincible = false;
 
 // Spikes
 var spikeTop = new Spike(100, 100, 0);
@@ -219,12 +223,10 @@ function gameStateIntro(deltaTime)
 }
 
 
-var totalTime = 0;
+
 
 function gameStateGame(deltaTime)
 {
-    // No longer needed var deltaTime = getDeltaTime(); // Get Delta.
-
     // Switch states if lives are out
     if(lives <= 0)
     {
@@ -284,9 +286,9 @@ function gameStateGame(deltaTime)
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
-    // Handle Ninja.
-    ninja.update(deltaTime);
-    ninja.draw();
+	
+	
+  
 
     // Collectables.
     drawPowerUps(deltaTime);
@@ -335,6 +337,13 @@ function gameStateGame(deltaTime)
     context.fillText("$" + money, 540, 87);
 
 	fireEmit (deltaTime, -20, 400, 200, 6)
+
+	//particle emitters
+	particleEmitter(deltaTime);
+	   	
+	// Handle Ninja.
+    ninja.update(deltaTime);
+    ninja.draw();
 }
 
 function gameStateGameover(deltaTime)
@@ -344,23 +353,23 @@ function gameStateGameover(deltaTime)
 	
     context.drawImage(endImage, 0, 0);
 
-	fireEmit (deltaTime, 630, 480, 185, 4)
-	fireEmit (deltaTime, 590, 480, 185, 4)
-	fireEmit (deltaTime, 550, 480, 185, 4)
-	fireEmit (deltaTime, 510, 480, 185, 4)
-	fireEmit (deltaTime, 470, 480, 185, 4)
-	fireEmit (deltaTime, 430, 480, 185, 4)
-	fireEmit (deltaTime, 390, 480, 185, 4)
-	fireEmit (deltaTime, 350, 480, 185, 4)
-	fireEmit (deltaTime, 310, 480, 185, 4)
-	fireEmit (deltaTime, 270, 480, 185, 4)
-	fireEmit (deltaTime, 230, 480, 185, 4)
-	fireEmit (deltaTime, 190, 480, 185, 4)
-	fireEmit (deltaTime, 150, 480, 185, 4)
-	fireEmit (deltaTime, 110, 480, 185, 4)
-	fireEmit (deltaTime, 70, 480, 185, 4)
-	fireEmit (deltaTime, 30, 480, 185, 4)
-	fireEmit (deltaTime, -20, 480, 185, 4)
+	fireEmit (deltaTime, 630, 480, 185, 5)
+	fireEmit (deltaTime, 590, 480, 185, 5)
+	fireEmit (deltaTime, 550, 480, 185, 5)
+	fireEmit (deltaTime, 510, 480, 185, 5)
+	fireEmit (deltaTime, 470, 480, 185, 5)
+	fireEmit (deltaTime, 430, 480, 185, 5)
+	fireEmit (deltaTime, 390, 480, 185, 5)
+	fireEmit (deltaTime, 350, 480, 185, 5)
+	fireEmit (deltaTime, 310, 480, 185, 5)
+	fireEmit (deltaTime, 270, 480, 185, 5)
+	fireEmit (deltaTime, 230, 480, 185, 5)
+	fireEmit (deltaTime, 190, 480, 185, 5)
+	fireEmit (deltaTime, 150, 480, 185, 5)
+	fireEmit (deltaTime, 110, 480, 185, 5)
+	fireEmit (deltaTime, 70, 480, 185, 5)
+	fireEmit (deltaTime, 30, 480, 185, 5)
+	fireEmit (deltaTime, -20, 480, 185, 5)
 
     context.fillStyle = "#FFFFFF";
     context.font = "50px Arial";
@@ -375,8 +384,8 @@ function gameStateGameover(deltaTime)
     context.font = "24px Arial";
     context.fillText("Overall score total:" + overallTotal, 175, 380);
 
-    context.font = "26px Arial";
-    context.fillText("HIGH SCORE:" + highScore, 175, 30);
+    context.font = "40px Salina";
+    context.fillText(highScore, 396, 37.5);
 }
 
 function run()
@@ -417,10 +426,6 @@ function fireEmit (deltaTime, x, y, eR, mL)
     fireEmitter.draw();
 }
 
-function gameOverFire (deltaTime)
-{
-
-}
 
 function findHighScore()
 {
@@ -432,6 +437,49 @@ function findHighScore()
     {
         highScore = overallTotal
     }
+}
+
+// emitter
+function particleEmitter(deltaTime)
+{
+	//Fire
+    totalTime += deltaTime;
+    fireEmitter.update(deltaTime);
+    // makes fire move left and right
+    fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
+    fireEmitter.position.y = 400;
+    // controls fire transparancy
+    fireEmitter.transparency = .3;
+    // how much fire spawns
+    fireEmitter.emissionRate = 200;
+    // kinda controls how high the fire grows
+    fireEmitter.maxLife = 6;
+    fireEmitter.draw();
+	  
+	// invincibility powerup
+	if(invincibilityTimer > 0)
+	{
+
+		
+		invincibilityEmitter.position.set(ninja.position.x + (10*(Math.sin(totalTime*1.5))),
+						ninja.position.y + (10*(Math.cos(totalTime*1.5))));
+		invincibilityEmitter.update(deltaTime);
+		invincibilityEmitter.wind = -500;
+		invincibilityEmitter.maxLife = 1; 
+		invincibilityEmitter.maxVelocity.set(100, 100);
+		
+		invincibilityEmitter.emissionRate = 200 * (invincibilityTimer/3.5);
+		invincibilityEmitter.gravity = 7;
+		invincibilityEmitter.transparency = 1;
+		invincibilityEmitter.draw();
+		
+		invincibilityTimer -= deltaTime;
+	}
+	else
+	{
+		ninjaInvincible = false;
+		invincibilityTimer = 0;
+	}
 }
 
 // Sound update
@@ -559,13 +607,13 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 
                 // Draw Image: context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-                // If upspike then then animate it.
-                if((tileIndex + 1) == 7)
+                // If upspike on the traps layer then then animate it.
+                if( drawlayer == 1 && (tileIndex + 1) == 7)
                 {
 
                     spikeTop.draw(dx, dy);
                 }
-                else if((tileIndex + 1) == 3)
+                else if(drawlayer == 1 && (tileIndex + 1) == 3)
                 {
                     spikeBottom.draw(dx, dy);
                 }
@@ -698,8 +746,6 @@ function movePowerUpsbyOneScreen()
 
 function handleCollisions(dx, dy)
 {
-	if (invincible == false)
-	{
 	   // Trap
 		var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
 
@@ -724,7 +770,6 @@ function handleCollisions(dx, dy)
 				sfxCollision.play();
 			}
 	}
-}
 
 
 // Adds a course.

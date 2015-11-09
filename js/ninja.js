@@ -42,15 +42,6 @@ var Ninja = function(){
 Ninja.prototype.update = function(deltaTime)
 {
     this.sprite.update(deltaTime);
-
-	if (invincible == true && this.gravityDown == true)
-	{
-		this.sprite.setAnimation(ANIM_INV_FLOOR);
-	}
-	if (invincible == true && this.gravityDown == false)
-	{
-		this.sprite.setAnimation(ANIM_INV_ROOF);
-	}
 	
     if(shakeScreen)
     {
