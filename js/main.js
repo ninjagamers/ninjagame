@@ -88,6 +88,8 @@ var ROOF_LIMIT = 55;
 
 // making fire emitter
 var fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
+var totalTime = 0;
+var invincibilityEmitter = createBurstEmitter("images/heartImage.png",  -20, SCREEN_HEIGHT - 100);
 
 // Loading splash screen image #splashimage
 var splashImage = document.createElement("img");
@@ -129,10 +131,12 @@ var returnToRun = false;
 var lifeLostTimer = 2;
 var dieSpriteTimer = 2;
 var distanceTimer = 150;
+var invincibilityTimer = 0;
 
 // Hit Ninja
 var shakeScreen = false;
 var shakeScreenTimer = 0;
+var ninjaInvincible = false;
 
 // Spikes
 var spikeTop = new Spike(100, 100, 0);
@@ -219,12 +223,10 @@ function gameStateIntro(deltaTime)
 }
 
 
-var totalTime = 0;
+
 
 function gameStateGame(deltaTime)
 {
-    // No longer needed var deltaTime = getDeltaTime(); // Get Delta.
-
     // Switch states if lives are out
     if(lives <= 0)
     {
@@ -284,9 +286,9 @@ function gameStateGame(deltaTime)
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
-    // Handle Ninja.
-    ninja.update(deltaTime);
-    ninja.draw();
+	
+	
+  
 
     // Collectables.
     drawPowerUps(deltaTime);
@@ -334,19 +336,12 @@ function gameStateGame(deltaTime)
     context.font="23px Amerigo";
     context.fillText("$" + money, 540, 87);
 
-    // Fire stuff
-    totalTime += deltaTime;
-    fireEmitter.update(deltaTime);
-    // makes fire move left and right
-    fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
-    fireEmitter.position.y = 400;
-    // controls fire transparancy
-    fireEmitter.transparency = .3;
-    // how much fire spawns
-    fireEmitter.emissionRate = 200;
-    // kinda controls how high the fire grows
-    fireEmitter.maxLife = 6;
-    fireEmitter.draw();
+	//particle emitters
+	particleEmitter(deltaTime);
+	   	
+	// Handle Ninja.
+    ninja.update(deltaTime);
+    ninja.draw();
 }
 
 function gameStateGameover(deltaTime)
@@ -405,6 +400,49 @@ function findHighScore()
     {
         highScore = overallTotal
     }
+}
+
+// emitter
+function particleEmitter(deltaTime)
+{
+	//Fire
+    totalTime += deltaTime;
+    fireEmitter.update(deltaTime);
+    // makes fire move left and right
+    fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
+    fireEmitter.position.y = 400;
+    // controls fire transparancy
+    fireEmitter.transparency = .3;
+    // how much fire spawns
+    fireEmitter.emissionRate = 200;
+    // kinda controls how high the fire grows
+    fireEmitter.maxLife = 6;
+    fireEmitter.draw();
+	  
+	// invincibility powerup
+	if(invincibilityTimer > 0)
+	{
+
+		
+		invincibilityEmitter.position.set(ninja.position.x + (10*(Math.sin(totalTime*1.5))),
+						ninja.position.y + (10*(Math.cos(totalTime*1.5))));
+		invincibilityEmitter.update(deltaTime);
+		invincibilityEmitter.wind = -500;
+		invincibilityEmitter.maxLife = 1; 
+		invincibilityEmitter.maxVelocity.set(100, 100);
+		
+		invincibilityEmitter.emissionRate = 200 * (invincibilityTimer/3.5);
+		invincibilityEmitter.gravity = 7;
+		invincibilityEmitter.transparency = 1;
+		invincibilityEmitter.draw();
+		
+		invincibilityTimer -= deltaTime;
+	}
+	else
+	{
+		ninjaInvincible = false;
+		invincibilityTimer = 0;
+	}
 }
 
 // Sound update
@@ -684,7 +722,7 @@ function handleCollisions(dx, dy)
         context.stroke();
     }
 
-    if(rect1.x < rect2.x + rect2.width &&
+    if(!ninjaInvincible && rect1.x < rect2.x + rect2.width &&
         rect1.x + rect1.width > rect2.x &&
         rect1.y < rect2.y + rect2.height &&
         rect1.height + rect1.y > rect2.y)
