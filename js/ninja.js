@@ -7,7 +7,10 @@ var ANIM_RUN_ROOF = 1;
 var ANIM_DIE_FLOOR = 2;
 // die/ live lost - on roof
 var ANIM_DIE_ROOF = 3;
-var ANIM_MAX = 4;
+var ANIM_INV_FLOOR = 4;
+var ANIM_INV_ROOF = 5;
+
+var ANIM_MAX = 6;
 
 var Ninja = function(){
 
@@ -17,6 +20,8 @@ var Ninja = function(){
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[45, 46, 47, 48, 49]);
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[16]);
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[31]);
+	this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[20, 21, 22, 23, 24]);
+    this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[25, 26, 27, 28, 29]);
 
     for(var i=0; i<ANIM_MAX; i++)
     {
@@ -38,6 +43,15 @@ Ninja.prototype.update = function(deltaTime)
 {
     this.sprite.update(deltaTime);
 
+	if (invincible == true && this.gravityDown == true)
+	{
+		this.sprite.setAnimation(ANIM_INV_FLOOR);
+	}
+	if (invincible == true && this.gravityDown == false)
+	{
+		this.sprite.setAnimation(ANIM_INV_ROOF);
+	}
+	
     if(shakeScreen)
     {
         dieSpriteTimer -= 1;
