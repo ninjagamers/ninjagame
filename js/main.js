@@ -532,13 +532,13 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
 
                 // Draw Image: context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-                // If upspike then then animate it.
-                if((tileIndex + 1) == 7)
+                // If upspike on the traps layer then then animate it.
+                if( drawlayer == 1 && (tileIndex + 1) == 7)
                 {
 
                     spikeTop.draw(dx, dy);
                 }
-                else if((tileIndex + 1) == 3)
+                else if(drawlayer == 1 && (tileIndex + 1) == 3)
                 {
                     spikeBottom.draw(dx, dy);
                 }
