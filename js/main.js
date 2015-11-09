@@ -89,13 +89,17 @@ var ROOF_LIMIT = 55;
 // making fire emitter
 var fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
 
-// Loading splash screen image #splashimage
+// Loading splash screen image
 var splashImage = document.createElement("img");
-// splash.src = "filename.png"
+splashImage.src = "images/splash.png";
 
 // Load intro screen image
 var introImage = document.createElement("img");
 introImage.src = "images/introGrass.png"
+
+//load gameover screen
+var endImage = document.createElement("img");
+endImage.src = "images/gameover.png"
 
 // Background variables
 var backnear = document.createElement("img");
@@ -172,11 +176,7 @@ function init()
 
 function gameStateSplash(deltaTime)
 {
-    // Need to get a splash screen image #splashimage to find code
-    // context.drawImage(splashImage, 0, 0);
-    context.fillStyle = "#000000";
-    context.font = "50px Arial";
-    context.fillText("Press Space", 175, 250);
+    context.drawImage(splashImage, 0, 0);
     if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
     {
         gameState = STATE_INTRO;
@@ -246,7 +246,7 @@ function gameStateGame(deltaTime)
             dieSpriteTimer -= 1;
         }
     }
-
+	
     // Update spikes
     spikeTop.update(deltaTime);
     spikeBottom.update(deltaTime);
@@ -334,30 +334,35 @@ function gameStateGame(deltaTime)
     context.font="23px Amerigo";
     context.fillText("$" + money, 540, 87);
 
-    // Fire stuff
-    totalTime += deltaTime;
-    fireEmitter.update(deltaTime);
-    // makes fire move left and right
-    fireEmitter.position.x = -20 + (10*(Math.sin(totalTime*1.5)));
-    fireEmitter.position.y = 400;
-    // controls fire transparancy
-    fireEmitter.transparency = .3;
-    // how much fire spawns
-    fireEmitter.emissionRate = 200;
-    // kinda controls how high the fire grows
-    fireEmitter.maxLife = 6;
-    fireEmitter.draw();
+	fireEmit (deltaTime, -20, 400, 200, 6)
 }
 
 function gameStateGameover(deltaTime)
 {
     overallTotal = distance + money;
     findHighScore();
+	
+    context.drawImage(endImage, 0, 0);
 
-    context.fillStyle = "#9ACD32";
-    context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	fireEmit (deltaTime, 630, 480, 185, 4)
+	fireEmit (deltaTime, 590, 480, 185, 4)
+	fireEmit (deltaTime, 550, 480, 185, 4)
+	fireEmit (deltaTime, 510, 480, 185, 4)
+	fireEmit (deltaTime, 470, 480, 185, 4)
+	fireEmit (deltaTime, 430, 480, 185, 4)
+	fireEmit (deltaTime, 390, 480, 185, 4)
+	fireEmit (deltaTime, 350, 480, 185, 4)
+	fireEmit (deltaTime, 310, 480, 185, 4)
+	fireEmit (deltaTime, 270, 480, 185, 4)
+	fireEmit (deltaTime, 230, 480, 185, 4)
+	fireEmit (deltaTime, 190, 480, 185, 4)
+	fireEmit (deltaTime, 150, 480, 185, 4)
+	fireEmit (deltaTime, 110, 480, 185, 4)
+	fireEmit (deltaTime, 70, 480, 185, 4)
+	fireEmit (deltaTime, 30, 480, 185, 4)
+	fireEmit (deltaTime, -20, 480, 185, 4)
 
-    context.fillStyle = "#008000";
+    context.fillStyle = "#FFFFFF";
     context.font = "50px Arial";
     context.fillText("Game Over", 175, 250);
 
@@ -393,6 +398,28 @@ function run()
             gameStateGameover(deltaTime);
         break;
     }
+}
+
+function fireEmit (deltaTime, x, y, eR, mL)
+{
+ // Fire stuff
+    totalTime += deltaTime;
+    fireEmitter.update(deltaTime);
+    // makes fire move left and right
+    fireEmitter.position.x = x + (10*(Math.sin(totalTime*1.5)));
+    fireEmitter.position.y = y;
+    // controls fire transparancy
+    fireEmitter.transparency = .2;
+    // how much fire spawns
+    fireEmitter.emissionRate = eR;
+    // kinda controls how high the fire grows
+    fireEmitter.maxLife = mL;
+    fireEmitter.draw();
+}
+
+function gameOverFire (deltaTime)
+{
+
 }
 
 function findHighScore()
@@ -656,6 +683,7 @@ function drawPowerUps(deltaTime)
         }
     }
 }
+
 function movePowerUpsbyOneScreen()
 {
     for(var i = 0; i < allCollectables.length; i++)
@@ -670,30 +698,34 @@ function movePowerUpsbyOneScreen()
 
 function handleCollisions(dx, dy)
 {
-    // Trap
-    var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
+	if (invincible == false)
+	{
+	   // Trap
+		var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
 
-    // Ninja
-    var rect2 = {x: ninja.position.x + 2, y: ninja.position.y, width: ninja.width - 12, height: ninja.height + 1};
+		// Ninja
+		var rect2 = {x: ninja.position.x + 2, y: ninja.position.y, width: ninja.width - 12, height: ninja.height + 1};
 
-    if(DEBUG_MODE)
-    {
-        context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
-        context.fill();
-        context.strokeStyle = "green";
-        context.stroke();
-    }
+		if(DEBUG_MODE)
+		{
+			context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
+			context.fill();
+			context.strokeStyle = "green";
+			context.stroke();
+		}
 
-    if(rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.height + rect1.y > rect2.y)
-        {
-            // Collision Detected
-            shakeScreen = true;
-            sfxCollision.play();
-        }
+		if(rect1.x < rect2.x + rect2.width &&
+			rect1.x + rect1.width > rect2.x &&
+			rect1.y < rect2.y + rect2.height &&
+			rect1.height + rect1.y > rect2.y)
+			{
+				// Collision Detected
+				shakeScreen = true;
+				sfxCollision.play();
+			}
+	}
 }
+
 
 // Adds a course.
 function addRandomCourse()
