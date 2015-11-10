@@ -22,6 +22,8 @@ var Keyboard = function()
     this.KEY_SHIFT = 16;
     this.KEY_1 = 49;
     this.KEY_2 = 50;
+	this.KEY_ENTER = 13;
+	this.KEY_R = 82;
 };
 
 Keyboard.prototype.onKeyDown = function(evt)

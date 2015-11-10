@@ -38,6 +38,10 @@ HUD.src = "images/HUD.png";
 var heartImage = document.createElement("img");
 heartImage.src = "images/heartImage.png";
 
+// Load stars for invincibility
+var starImage = document.createElement("img");
+starImage.src = "images/star.png";
+
 // Load for sprites
 var SPRITES = document.createElement("img");
 SPRITES.src = "images/sprites.png";
@@ -89,7 +93,7 @@ var ROOF_LIMIT = 55;
 // making fire emitter
 var fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
 var totalTime = 0;
-var invincibilityEmitter = createBurstEmitter("images/heartImage.png",  -20, SCREEN_HEIGHT - 100);
+var invincibilityEmitter = createBurstEmitter("images/star.png",  -20, SCREEN_HEIGHT - 100);
 
 // Loading splash screen image
 var splashImage = document.createElement("img");
@@ -130,6 +134,7 @@ var keyboard = new Keyboard();
 var courses = []; // levels
 var levelSpeed = 150;
 var returnToRun = false;
+var refresh = false;
 
 //timers
 var lifeLostTimer = 2;
@@ -212,9 +217,9 @@ function gameStateIntro(deltaTime)
     context.fillText("and help him survive as long as possible!", 8, 275);
 
     context.fillStyle = "#FFFFFF";
-    context.fillText("PRESS SHIFT TO BEGIN!", 200, 400);
+    context.fillText("PRESS ENTER TO BEGIN!", 200, 400);
 
-    if(keyboard.isKeyDown(keyboard.KEY_SHIFT) == true)
+    if(keyboard.isKeyDown(keyboard.KEY_ENTER) == true)
     {
         gameState = STATE_GAME;
     }
@@ -372,20 +377,32 @@ function gameStateGameover(deltaTime)
 	fireEmit (deltaTime, -20, 480, 185, 5)
 
     context.fillStyle = "#FFFFFF";
-    context.font = "50px Arial";
-    context.fillText("Game Over", 175, 250);
-
-    context.font = "24px Arial";
-    context.fillText("Distance:" + distance, 175, 300);
-
-    context.font = "24px Arial";
-    context.fillText("Money:" + money, 175, 340);
-
-    context.font = "24px Arial";
-    context.fillText("Overall score total:" + overallTotal, 175, 380);
-
     context.font = "40px Salina";
     context.fillText(highScore, 396, 37.5);
+	
+    context.font = "140px Salina";
+    context.fillText("Game Over", 5, 200);
+
+    context.fillStyle = "#FAEBD7";
+    context.font = "35px Salina";
+    context.fillText("Distance:" + distance, 240, 300);
+
+    context.font = "35px Salina";
+    context.fillText("Money:" + money, 255, 340);
+
+	context.fillStyle = "#7FFF00";
+    context.font = "40px Salina";
+    context.fillText("Overall score total:" + overallTotal, 170, 380);
+	
+	context.fillStyle = "#FFFFFF";
+    context.font = "24px Candara";
+    context.fillText("Try Again?", 420, 443);
+	context.fillText("Press [R] to Restart!" , 400, 470);
+	
+	if(keyboard.isKeyDown(keyboard.KEY_R) == true)
+    {
+       restart ();
+    }
 }
 
 function run()
@@ -409,6 +426,18 @@ function run()
     }
 }
 
+function restart ()
+{
+	spikes = [];
+	courses = [];
+	allCollectables = [];
+	allLevelCollect = [];
+	init ();
+	
+	
+	gameState = STATE_INTRO;
+}
+
 function fireEmit (deltaTime, x, y, eR, mL)
 {
  // Fire stuff
@@ -425,7 +454,6 @@ function fireEmit (deltaTime, x, y, eR, mL)
     fireEmitter.maxLife = mL;
     fireEmitter.draw();
 }
-
 
 function findHighScore()
 {
