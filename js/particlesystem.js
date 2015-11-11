@@ -84,13 +84,9 @@ Emitter.prototype.draw = function(x)
     var origin = new Vector2();
     origin.set(this.texture.width / 2, this.texture.height / 2);
 	
-	var test = 0;
-	
-	test = x;
-	
 	if(x == 1)
 	{
-		for(var i=0; i<this.particles.length; i++ )
+		for(var i=0; i<this.particles.length; i++)
 		{
 			var p = this.particles[i];
 
@@ -101,6 +97,8 @@ Emitter.prototype.draw = function(x)
 			context.translate(p.position.x, p.position.y);
 			context.rotate(p.rotation);
 			context.globalAlpha = p.alpha;
+			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+			// link above for types
 			context.globalCompositeOperation = ('screen');
 			context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
 			context.restore();
@@ -108,7 +106,7 @@ Emitter.prototype.draw = function(x)
 	}
 	else
 	{
-		for(var i=0; i<this.particles.length; i++ )
+		for(var i=0; i<this.particles.length; i++)
 		{
 			var p = this.particles[i];
 

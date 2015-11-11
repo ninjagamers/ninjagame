@@ -433,7 +433,7 @@ function restart ()
 	lives = 3;
 	distance = 0;
 	money = 0;
-	// reset speed
+	levelSpeed = 150;
 	
 	
 	// making sure ninja starts on floor
@@ -780,10 +780,22 @@ function movePowerUpsbyOneScreen()
 function handleCollisions(dx, dy)
 {
 	   // Trap
-		var rect1 = {x: dx, y: dy, width: TILE, height: TILE};
+		var rect1 = 
+		{
+			x: dx, 
+			y: dy, 
+			width: TILE, 
+			height: TILE
+		};
 
 		// Ninja
-		var rect2 = {x: ninja.position.x + 2, y: ninja.position.y, width: ninja.width - 12, height: ninja.height + 1};
+		var rect2 = 
+		{
+			x: ninja.position.x + 2, 
+			y: ninja.position.y, 
+			width: ninja.width - 20, 
+			height: ninja.height + 1
+		};
 
 		if(DEBUG_MODE)
 		{
@@ -802,6 +814,7 @@ function handleCollisions(dx, dy)
 				shakeScreen = true;
 				sfxCollision.play();
 			}
+		
 	}
 
 
