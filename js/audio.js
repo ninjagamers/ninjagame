@@ -91,10 +91,10 @@ var bgmV2Playing = false;
 // footsteps v1
 sfxFootstepsV1 = new Howl(
 {
-    urls: ["sounds/footsteps_forest.ogg"],
+    urls: ["sounds/footsteps_leaves.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
-    rate: 10.0, // may need tweaking
+    rate: 10.0,
     loop: true,
     onend: function()
     {
@@ -110,7 +110,6 @@ sfxFootstepsV2 = new Howl(
     urls: ["sounds/footsteps_leaves.ogg"],
     buffer: true,
     volume: 1, // may need tweaking
-    rate: 5.0, // may need tweaking
     loop: true,
     onend: function()
     {

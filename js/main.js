@@ -227,9 +227,6 @@ function gameStateIntro(deltaTime)
     ninja.draw();
 }
 
-
-
-
 function gameStateGame(deltaTime)
 {
     // Switch states if lives are out
@@ -291,11 +288,7 @@ function gameStateGame(deltaTime)
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
-	
-	
-  
-
-    // Collectables.
+	// Collectables.
     drawPowerUps(deltaTime);
 
     // Updates spikes
@@ -380,7 +373,7 @@ function gameStateGameover(deltaTime)
     context.font = "40px Salina";
     context.fillText(highScore, 396, 37.5);
 	
-    context.font = "140px Salina";
+    context.font = "134px Salina";
     context.fillText("Game Over", 5, 200);
 
     context.fillStyle = "#FAEBD7";
@@ -434,7 +427,19 @@ function restart ()
 	allLevelCollect = [];
 	init ();
 	
+	// need to reset course
 	
+	// resetting variables
+	lives = 3;
+	distance = 0;
+	money = 0;
+	// reset speed
+	
+	
+	// making sure ninja starts on floor
+	ninja.position.y = FLOOR_LIMIT;
+	
+	// 
 	gameState = STATE_INTRO;
 }
 
@@ -487,8 +492,6 @@ function particleEmitter(deltaTime)
 	// invincibility powerup
 	if(invincibilityTimer > 0)
 	{
-
-		
 		invincibilityEmitter.position.set(ninja.position.x + (10*(Math.sin(totalTime*1.5))),
 						ninja.position.y + (10*(Math.cos(totalTime*1.5))));
 		invincibilityEmitter.update(deltaTime);
@@ -788,7 +791,7 @@ function handleCollisions(dx, dy)
 			context.stroke();
 		}
 
-		if(rect1.x < rect2.x + rect2.width &&
+		if(!ninjaInvincible && rect1.x < rect2.x + rect2.width &&
 			rect1.x + rect1.width > rect2.x &&
 			rect1.y < rect2.y + rect2.height &&
 			rect1.height + rect1.y > rect2.y)

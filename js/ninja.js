@@ -9,7 +9,6 @@ var ANIM_DIE_FLOOR = 2;
 var ANIM_DIE_ROOF = 3;
 var ANIM_INV_FLOOR = 4;
 var ANIM_INV_ROOF = 5;
-
 var ANIM_MAX = 6;
 
 var Ninja = function(){
