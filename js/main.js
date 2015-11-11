@@ -457,7 +457,7 @@ function fireEmit (deltaTime, x, y, eR, mL)
     fireEmitter.emissionRate = eR;
     // kinda controls how high the fire grows
     fireEmitter.maxLife = mL;
-    fireEmitter.draw();
+    fireEmitter.draw(1);
 }
 
 function findHighScore()
@@ -487,6 +487,7 @@ function particleEmitter(deltaTime)
     fireEmitter.emissionRate = 200;
     // kinda controls how high the fire grows
     fireEmitter.maxLife = 6;
+	// fireEmitter.context.globalCompositeOperation = ("screen");
     fireEmitter.draw();
 	  
 	// invincibility powerup
@@ -502,7 +503,8 @@ function particleEmitter(deltaTime)
 		invincibilityEmitter.emissionRate = 200 * (invincibilityTimer/3.5);
 		invincibilityEmitter.gravity = 7;
 		invincibilityEmitter.transparency = 1;
-		invincibilityEmitter.draw();
+		
+		invincibilityEmitter.draw(1);
 		
 		invincibilityTimer -= deltaTime;
 	}

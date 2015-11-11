@@ -79,25 +79,51 @@ Emitter.prototype.update = function(dt)
     }
 };
 
-Emitter.prototype.draw = function() 
+Emitter.prototype.draw = function(x) 
 {
     var origin = new Vector2();
     origin.set(this.texture.width / 2, this.texture.height / 2);
+	
+	var test = 0;
+	
+	test = x;
+	
+	if(x == 1)
+	{
+		for(var i=0; i<this.particles.length; i++ )
+		{
+			var p = this.particles[i];
 
-    for(var i=0; i<this.particles.length; i++ )
-    {
-        var p = this.particles[i];
+			var scale = new Vector2();
+			scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
 
-        var scale = new Vector2();
-        scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
+			context.save();
+			context.translate(p.position.x, p.position.y);
+			context.rotate(p.rotation);
+			context.globalAlpha = p.alpha;
+			context.globalCompositeOperation = ('screen');
+			context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
+			context.restore();
+		}
+	}
+	else
+	{
+		for(var i=0; i<this.particles.length; i++ )
+		{
+			var p = this.particles[i];
 
-        context.save();
-        context.translate(p.position.x, p.position.y);
-        context.rotate(p.rotation);
-        context.globalAlpha = p.alpha;
-        context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
-        context.restore();
-    }
+			var scale = new Vector2();
+			scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
+
+			context.save();
+			context.translate(p.position.x, p.position.y);
+			context.rotate(p.rotation);
+			context.globalAlpha = p.alpha;
+			// context.globalCompositeOperation = ('screen');
+			context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
+			context.restore();
+		}		
+	}
 };
 
 Emitter.prototype.spawnParticle = function()
