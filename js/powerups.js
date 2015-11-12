@@ -96,25 +96,25 @@ RegularCoins.prototype.draw = function()
 function power(powerType)
 {
     if(powerType == POWERUP_COIN)
-	{
+    {
         addOneCoin();
-		sfxCoin.play();
+        sfxCoin.play();
     }
     else if(powerType == POWERUP_COINS)
     {
         addManyCoins();
-		sfxCoin.play();
-		sfxPowerup.play();
+        sfxCoin.play();
+        sfxPowerup.play();
     }
     else if(powerType == POWERUP_INV)
     {
         invincibility();
-		sfxPowerup.play();
+        sfxPowerup.play();
     }
     else if(powerType == POWERUP_LIFE)
     {
         addLife();
-		sfxPowerup.play();
+        sfxPowerup.play();
     }
 }
 
@@ -126,16 +126,16 @@ function addOneCoin()
 function addManyCoins()
 {
     money += 15;
-	coinPower= true;
-	showPower = true;
+    coinPower= true;
+    showPower = true;
 }
 
 function invincibility(deltaTime)
 {
-	// can change if wanted
-	invincibilityTimer = 5;
-	ninjaInvincible = true;
-	showPower = true;
+    // can change if wanted
+    invincibilityTimer = 5;
+    ninjaInvincible = true;
+    showPower = true;
 }
 
 function addLife()
@@ -144,6 +144,6 @@ function addLife()
     {
         lives += 1;
     }
-	lifePower = true;
-	showPower = true;
+    lifePower = true;
+    showPower = true;
 }

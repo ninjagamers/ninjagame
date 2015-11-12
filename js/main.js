@@ -236,7 +236,6 @@ function gameStateIntro(deltaTime)
         gameState = STATE_GAME;
     }
 
-    ninja.draw();
 }
 
 function gameStateGame(deltaTime)
@@ -262,7 +261,7 @@ function gameStateGame(deltaTime)
             dieSpriteTimer -= 1;
         }
     }
-	
+
     // Update spikes
     spikeTop.update(deltaTime);
     spikeBottom.update(deltaTime);
@@ -300,7 +299,7 @@ function gameStateGame(deltaTime)
         drawMap(courses[index], 1, Math.floor(stageOffsetX - (index * (20 * TILE))), true);
     }
 
-	// Collectables.
+    // Collectables.
     drawPowerUps(deltaTime);
 
     // Updates spikes
@@ -346,49 +345,49 @@ function gameStateGame(deltaTime)
     context.font="23px Amerigo";
     context.fillText("$" + money, 540, 87);
 
-	fireEmit (deltaTime, -20, 400, 200, 6)
+    fireEmit (deltaTime, -20, 400, 200, 6);
 
-	//particle emitters
-	particleEmitter(deltaTime);
-	   	
-	// Handle Ninja.
+    //particle emitters
+    particleEmitter(deltaTime);
+
+    // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
-	
-	//write powers on top of screen
-	if (ninjaInvincible == true)
-	{
-		showPower = WRITE_INV;
-	}
-	if (coinPower == true)
-	{
-		showPower = WRITE_COIN;
-	}
-	if (lifePower == true)
-	{
-		showPower = WRITE_LIFE;
-	}
-	
-	if (writeInvTimer <= 0)
-	{
-		showPower = WRITE_NONE;
-		writeInvTimer = 5;
-	}
-	if (writeTimer <=0)
-	{
-		coinPower = false;
-		lifePower = false;
-		showPower = WRITE_NONE;
-		writeTimer = 0.8;
-	}
-	
-	 switch(showPower)
+
+    //write powers on top of screen
+    if (ninjaInvincible == true)
+    {
+        showPower = WRITE_INV;
+    }
+    if (coinPower == true)
+    {
+        showPower = WRITE_COIN;
+    }
+    if (lifePower == true)
+    {
+        showPower = WRITE_LIFE;
+    }
+
+    if (writeInvTimer <= 0)
+    {
+        showPower = WRITE_NONE;
+        writeInvTimer = 5;
+    }
+    if (writeTimer <=0)
+    {
+        coinPower = false;
+        lifePower = false;
+        showPower = WRITE_NONE;
+        writeTimer = 0.8;
+    }
+
+     switch(showPower)
     {
         case WRITE_INV:
-			writeInv (deltaTime)
+            writeInv (deltaTime);
         break;
         case WRITE_COIN:
-            writeCoin (deltaTime)
+            writeCoin (deltaTime);
         break;
         case WRITE_LIFE:
             writeLife (deltaTime);
@@ -403,31 +402,31 @@ function gameStateGameover(deltaTime)
 {
     overallTotal = distance + money;
     findHighScore();
-	
+
     context.drawImage(endImage, 0, 0);
 
-	fireEmit (deltaTime, 630, 480, 185, 5)
-	fireEmit (deltaTime, 590, 480, 185, 5)
-	fireEmit (deltaTime, 550, 480, 185, 5)
-	fireEmit (deltaTime, 510, 480, 185, 5)
-	fireEmit (deltaTime, 470, 480, 185, 5)
-	fireEmit (deltaTime, 430, 480, 185, 5)
-	fireEmit (deltaTime, 390, 480, 185, 5)
-	fireEmit (deltaTime, 350, 480, 185, 5)
-	fireEmit (deltaTime, 310, 480, 185, 5)
-	fireEmit (deltaTime, 270, 480, 185, 5)
-	fireEmit (deltaTime, 230, 480, 185, 5)
-	fireEmit (deltaTime, 190, 480, 185, 5)
-	fireEmit (deltaTime, 150, 480, 185, 5)
-	fireEmit (deltaTime, 110, 480, 185, 5)
-	fireEmit (deltaTime, 70, 480, 185, 5)
-	fireEmit (deltaTime, 30, 480, 185, 5)
-	fireEmit (deltaTime, -20, 480, 185, 5)
+    fireEmit (deltaTime, 630, 480, 185, 5);
+    fireEmit (deltaTime, 590, 480, 185, 5);
+    fireEmit (deltaTime, 550, 480, 185, 5);
+    fireEmit (deltaTime, 510, 480, 185, 5);
+    fireEmit (deltaTime, 470, 480, 185, 5);
+    fireEmit (deltaTime, 430, 480, 185, 5);
+    fireEmit (deltaTime, 390, 480, 185, 5);
+    fireEmit (deltaTime, 350, 480, 185, 5);
+    fireEmit (deltaTime, 310, 480, 185, 5);
+    fireEmit (deltaTime, 270, 480, 185, 5);
+    fireEmit (deltaTime, 230, 480, 185, 5);
+    fireEmit (deltaTime, 190, 480, 185, 5);
+    fireEmit (deltaTime, 150, 480, 185, 5);
+    fireEmit (deltaTime, 110, 480, 185, 5);
+    fireEmit (deltaTime, 70, 480, 185, 5);
+    fireEmit (deltaTime, 30, 480, 185, 5);
+    fireEmit (deltaTime, -20, 480, 185, 5);
 
     context.fillStyle = "#FFFFFF";
     context.font = "40px Salina";
     context.fillText(highScore, 396, 37.5);
-	
+
     context.font = "134px Salina";
     context.fillText("Game Over", 5, 200);
 
@@ -436,18 +435,18 @@ function gameStateGameover(deltaTime)
     context.fillText("Distance:" + distance, 245, 300);
     context.fillText("Money:" + money, 255, 340);
 
-	context.fillStyle = "#7FFF00";
+    context.fillStyle = "#7FFF00";
     context.font = "40px Candara";
     context.fillText("Overall score total:" + overallTotal, 155, 380);
-	
-	context.fillStyle = "#FFFFFF";
+
+    context.fillStyle = "#FFFFFF";
     context.font = "24px Candara";
     context.fillText("Try Again?", 420, 443);
-	context.fillText("Press [R] to Restart!" , 400, 470);
-	
-	if(keyboard.isKeyDown(keyboard.KEY_R) == true)
+    context.fillText("Press [R] to Restart!" , 400, 470);
+
+    if(keyboard.isKeyDown(keyboard.KEY_R) == true)
     {
-       restart ();
+       restart();
     }
 }
 
@@ -472,60 +471,62 @@ function run()
     }
 }
 
-function restart ()
+function restart()
 {
-	spikes = [];
-	courses = [];
-	allCollectables = [];
-	allLevelCollect = [];
-	init ();
-	
-	// need to reset course
-	
-	// resetting variables
-	lives = 3;
-	distance = 0;
-	money = 0;
-	levelSpeed = 150;
-	
-	
-	// making sure ninja starts on floor
-	ninja.position.y = FLOOR_LIMIT;
-	
-	// 
-	gameState = STATE_SPLASH;
+    spikes = [];
+    courses = [];
+    allCollectables = [];
+    allLevelCollect = [];
+    init();
+
+    // need to reset course
+
+    // resetting variables
+    lives = 3;
+    distance = 0;
+    money = 0;
+    levelSpeed = 150;
+    dieSpriteTimer = 2;
+    shakeScreen = false;
+
+    // making sure ninja starts on floor
+    ninja = new Ninja();
+    fireEmitter = createFireEmitter("images/fire2.png", -20, SCREEN_HEIGHT - 100);
+
+    // set game state
+    gameState = STATE_SPLASH;
 }
 
-function writeLife (deltaTime)
+function writeLife(deltaTime)
 {
-	context.fillStyle = "#7FFF00";
-	context.font = "30px Candara";
-	context.fillText("Extra life!", 240, 35);
-	writeTimer -= deltaTime;
+    context.fillStyle = "#7FFF00";
+    context.font = "30px Candara";
+    context.fillText("Extra life!", 240, 35);
+    writeTimer -= deltaTime;
 }
 
-function writeInv (deltaTime)
+function writeInv(deltaTime)
 {
-	context.fillStyle = "#7FFF00";
-	context.font = "30px Candara";
-	context.fillText("Invincibility!", 240, 35);
-	writeInvTimer -= deltaTime;
+    context.fillStyle = "#7FFF00";
+    context.font = "30px Candara";
+    context.fillText("Invincibility!", 240, 35);
+    writeInvTimer -= deltaTime;
 }
 
-function writeCoin (deltaTime)
+function writeCoin(deltaTime)
 {
-	context.fillStyle = "#7FFF00";
-	context.font = "30px Candara";
-	context.fillText("Extra money!", 240, 35);
-	writeTimer -= deltaTime;
+    context.fillStyle = "#7FFF00";
+    context.font = "30px Candara";
+    context.fillText("Extra money!", 240, 35);
+    writeTimer -= deltaTime;
 }
 
-function writeNone ()
+function writeNone()
 {
-	context.fillText(" ", 240, 35);
+    context.fillText(" ", 240, 35);
 }
 
-function fireEmit (deltaTime, x, y, eR, mL)
+function fireEmit(deltaTime, x, y, eR, mL)
 {
  // Fire stuff
     totalTime += deltaTime;
@@ -533,7 +534,7 @@ function fireEmit (deltaTime, x, y, eR, mL)
     // makes fire move left and right
     fireEmitter.position.x = x + (10*(Math.sin(totalTime*1.5)));
     fireEmitter.position.y = y;
-    // controls fire transparancy
+    // controls fire transparency
     fireEmitter.transparency = .2;
     // how much fire spawns
     fireEmitter.emissionRate = eR;
@@ -557,7 +558,7 @@ function findHighScore()
 // emitter
 function particleEmitter(deltaTime)
 {
-	//Fire
+    //Fire
     totalTime += deltaTime;
     fireEmitter.update(deltaTime);
     // makes fire move left and right
@@ -569,32 +570,32 @@ function particleEmitter(deltaTime)
     fireEmitter.emissionRate = 200;
     // kinda controls how high the fire grows
     fireEmitter.maxLife = 6;
-	// fireEmitter.context.globalCompositeOperation = ("screen");
+    // fireEmitter.context.globalCompositeOperation = ("screen");
     fireEmitter.draw();
-	  
-	// invincibility powerup
-	if(invincibilityTimer > 0)
-	{
-		invincibilityEmitter.position.set(ninja.position.x + (10*(Math.sin(totalTime*1.5))),
-						ninja.position.y + (10*(Math.cos(totalTime*1.5))));
-		invincibilityEmitter.update(deltaTime);
-		invincibilityEmitter.wind = -500;
-		invincibilityEmitter.maxLife = 1; 
-		invincibilityEmitter.maxVelocity.set(100, 100);
-		
-		invincibilityEmitter.emissionRate = 200 * (invincibilityTimer/3.5);
-		invincibilityEmitter.gravity = 7;
-		invincibilityEmitter.transparency = 1;
-		
-		invincibilityEmitter.draw(1);
-		
-		invincibilityTimer -= deltaTime;
-	}
-	else
-	{
-		ninjaInvincible = false;
-		invincibilityTimer = 0;
-	}
+
+    // invincibility powerup
+    if(invincibilityTimer > 0)
+    {
+        invincibilityEmitter.position.set(ninja.position.x + (10*(Math.sin(totalTime*1.5))),
+            ninja.position.y + (10*(Math.cos(totalTime*1.5))));
+        invincibilityEmitter.update(deltaTime);
+        invincibilityEmitter.wind = -500;
+        invincibilityEmitter.maxLife = 1;
+        invincibilityEmitter.maxVelocity.set(100, 100);
+
+        invincibilityEmitter.emissionRate = 200 * (invincibilityTimer/3.5);
+        invincibilityEmitter.gravity = 7;
+        invincibilityEmitter.transparency = 1;
+
+        invincibilityEmitter.draw(1);
+
+        invincibilityTimer -= deltaTime;
+    }
+    else
+    {
+        ninjaInvincible = false;
+        invincibilityTimer = 0;
+    }
 }
 
 // Sound update
@@ -650,7 +651,7 @@ function makeScreenShake(deltaTime)
         shakeScreenTimer += deltaTime;
         context.save();
         var dx = Math.random() * 10;
-        var dy = Math.random() * 1;
+        var dy = Math.random();
         context.translate(dx, dy);
     }
 }
@@ -663,15 +664,15 @@ function restoreScreen()
 // Draw a parallax scrolling background.
 function drawBackground(deltaTime)
 {
-	context.drawImage(backDistance, backDistanceX, 50);
+    context.drawImage(backDistance, backDistanceX, 50);
     context.drawImage(backDistance, backDistanceX + 640, 50);
-	context.drawImage(backnear, backnearX, 50);
+    context.drawImage(backnear, backnearX, 50);
     context.drawImage(backnear, backnearX + 640, 50);
-	context.drawImage(backfar, backfarX, 50);
+    context.drawImage(backfar, backfarX, 50);
     context.drawImage(backfar, backfarX + 640, 50);
 
     backDistanceX = backDistanceX - (deltaTime * levelSpeed /40);
-	backfarX = backfarX - (deltaTime * levelSpeed /4);
+    backfarX = backfarX - (deltaTime * levelSpeed /4);
     backnearX = backnearX - (deltaTime * levelSpeed /8);
 
     if(backfarX < -640)
@@ -682,7 +683,7 @@ function drawBackground(deltaTime)
     {
       backnearX = backnearX + 640;
     }
-	 if (backDistanceX < -640)
+    if(backDistanceX < -640)
     {
       backDistanceX = backDistanceX + 640;
     }
@@ -709,11 +710,10 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                 var sy = (Math.floor(tileIndex / TILESET_COUNT_X)) * TILE;
 
                 // Handle Collisions
-
                 var dx = x * TILE - curStageOffsetX;
                 var dy = y * TILE;
 
-                if(checkCollision && dx < 64 && dx > 0)
+                if(checkCollision && dx < 164 && dx > 0)
                 {
                     count++;
 
@@ -725,7 +725,6 @@ function drawMap(test, drawlayer, curStageOffsetX, checkCollision)
                 // If upspike on the traps layer then then animate it.
                 if( drawlayer == 1 && (tileIndex + 1) == 7)
                 {
-
                     spikeTop.draw(dx, dy);
                 }
                 else if(drawlayer == 1 && (tileIndex + 1) == 3)
@@ -850,7 +849,6 @@ function drawPowerUps(deltaTime)
 function movePowerUpsbyOneScreen()
 {
     for(var i = 0; i < allCollectables.length; i++)
-
     {
         for(var j = 0; j < allCollectables[i].length; j++)
         {
@@ -861,44 +859,42 @@ function movePowerUpsbyOneScreen()
 
 function handleCollisions(dx, dy)
 {
-	   // Trap
-		var rect1 = 
-		{
-			x: dx, 
-			y: dy, 
-			width: TILE, 
-			height: TILE
-		};
+   // Trap
+    var rect1 =
+    {
+        x: dx,
+        y: dy,
+        width: TILE,
+        height: TILE
+    };
 
-		// Ninja
-		var rect2 = 
-		{
-			x: ninja.position.x + 2, 
-			y: ninja.position.y, 
-			width: ninja.width - 20, 
-			height: ninja.height + 1
-		};
+    // Ninja
+    var rect2 =
+    {
+        x: ninja.position.x + 2,
+        y: ninja.position.y,
+        width: ninja.width - 20,
+        height: ninja.height + 1
+    };
 
-		if(DEBUG_MODE)
-		{
-			context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
-			context.fill();
-			context.strokeStyle = "green";
-			context.stroke();
-		}
+    if(DEBUG_MODE)
+    {
+        context.rect(rect2.x,rect2.y,rect2.width,rect2.height);
+        context.fill();
+        context.strokeStyle = "green";
+        context.stroke();
+    }
 
-		if(!ninjaInvincible && rect1.x < rect2.x + rect2.width &&
-			rect1.x + rect1.width > rect2.x &&
-			rect1.y < rect2.y + rect2.height &&
-			rect1.height + rect1.y > rect2.y)
-			{
-				// Collision Detected
-				shakeScreen = true;
-				sfxCollision.play();
-			}
-		
-	}
-
+    if(!ninjaInvincible && rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.height + rect1.y > rect2.y)
+        {
+            // Collision Detected
+            shakeScreen = true;
+            sfxCollision.play();
+        }
+}
 
 // Adds a course.
 function addRandomCourse()
@@ -926,7 +922,6 @@ function addEmptyCourse()
 }
 
 // Collectables
-// function
 
 function checkForClicks()
 {
@@ -977,7 +972,8 @@ function pixelToTile(pixel)
     return Math.floor(pixel/TILE);
 }
 
-function getRandomInt(min, max) {
+function getRandomInt(min, max)
+{
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 

@@ -62,7 +62,7 @@ Emitter.prototype.update = function(dt)
         var p = this.particles[i];
 
         p.life -= dt;
-        if (p.life <= 0.0)
+        if(p.life <= 0.0)
         {
             this.particles.splice(i, 1);
         }
@@ -74,8 +74,10 @@ Emitter.prototype.update = function(dt)
         p.position.x += p.velocity.x * dt;
         p.position.y -= p.velocity.y * dt;
 
-        if (p.life <= 1.0)
+        if(p.life <= 1.0)
+        {
             p.alpha = p.life * this.transparency;
+        }
     }
 };
 
@@ -83,45 +85,45 @@ Emitter.prototype.draw = function(x)
 {
     var origin = new Vector2();
     origin.set(this.texture.width / 2, this.texture.height / 2);
-	
-	if(x == 1)
-	{
-		for(var i=0; i<this.particles.length; i++)
-		{
-			var p = this.particles[i];
 
-			var scale = new Vector2();
-			scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
+    if(x == 1)
+    {
+        for(var i=0; i<this.particles.length; i++)
+        {
+            var p = this.particles[i];
 
-			context.save();
-			context.translate(p.position.x, p.position.y);
-			context.rotate(p.rotation);
-			context.globalAlpha = p.alpha;
-			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
-			// link above for types
-			context.globalCompositeOperation = ('screen');
-			context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
-			context.restore();
-		}
-	}
-	else
-	{
-		for(var i=0; i<this.particles.length; i++)
-		{
-			var p = this.particles[i];
+            var scale = new Vector2();
+            scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
 
-			var scale = new Vector2();
-			scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
+            context.save();
+            context.translate(p.position.x, p.position.y);
+            context.rotate(p.rotation);
+            context.globalAlpha = p.alpha;
+            // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+            // link above for types
+            context.globalCompositeOperation = ('screen');
+            context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
+            context.restore();
+        }
+    }
+    else
+    {
+        for(var i=0; i<this.particles.length; i++)
+        {
+            var p = this.particles[i];
 
-			context.save();
-			context.translate(p.position.x, p.position.y);
-			context.rotate(p.rotation);
-			context.globalAlpha = p.alpha;
-			// context.globalCompositeOperation = ('screen');
-			context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
-			context.restore();
-		}		
-	}
+            var scale = new Vector2();
+            scale.set( p.size.x / this.texture.width, p.size.y / this.texture.height);
+
+            context.save();
+            context.translate(p.position.x, p.position.y);
+            context.rotate(p.rotation);
+            context.globalAlpha = p.alpha;
+            // context.globalCompositeOperation = ('screen');
+            context.drawImage(this.texture, origin.x * scale.x, origin.y * scale.y, p.size.x, p.size.y);
+            context.restore();
+        }
+    }
 };
 
 Emitter.prototype.spawnParticle = function()

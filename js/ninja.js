@@ -19,7 +19,7 @@ var Ninja = function(){
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[45, 46, 47, 48, 49]);
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[16]);
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[31]);
-	this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[20, 21, 22, 23, 24]);
+    this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[20, 21, 22, 23, 24]);
     this.sprite.buildAnimation(5, 10, 64, 64, 0.05,[25, 26, 27, 28, 29]);
 
     for(var i=0; i<ANIM_MAX; i++)
@@ -41,8 +41,8 @@ var Ninja = function(){
 Ninja.prototype.update = function(deltaTime)
 {
     this.sprite.update(deltaTime);
-	
-    if(shakeScreen)
+
+    if(shakeScreen && gameState !== STATE_INTRO)
     {
         dieSpriteTimer -= 1;
         if(this.gravityDown == false)
@@ -56,7 +56,7 @@ Ninja.prototype.update = function(deltaTime)
         }
     }
 
-    if(returnToRun == true)
+    else if(returnToRun == true)
     {
         if(this.gravityDown == true)
         {
@@ -68,8 +68,8 @@ Ninja.prototype.update = function(deltaTime)
         }
     }
 
-    if(restoreScreen)
-    {
+    //if(restoreScreen)
+    //{
         if(dieSpriteTimer <= 0 && this.gravityDown == true)
         {
             this.sprite.setAnimation(ANIM_RUN_FLOOR);
@@ -80,7 +80,7 @@ Ninja.prototype.update = function(deltaTime)
             this.sprite.setAnimation(ANIM_RUN_ROOF);
             dieSpriteTimer = 2;
         }
-    }
+    //}
 
     // If ninja is falling down.
     if(this.gravityDown == true)
