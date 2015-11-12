@@ -145,7 +145,19 @@ var invincibilityTimer = 0;
 // Hit Ninja
 var shakeScreen = false;
 var shakeScreenTimer = 0;
+
+//powerups
 var ninjaInvincible = false;
+var lifePower = false;
+var coinPower = false;
+var writeTimer = 0.8;
+var writeInvTimer = 5;
+// switch contants
+var WRITE_INV = 0;
+var WRITE_COIN= 1;
+var WRITE_LIFE = 2;
+var WRITE_NONE = 3;
+var showPower = WRITE_NONE;
 
 // Spikes
 var spikeTop = new Spike(100, 100, 0);
@@ -342,6 +354,49 @@ function gameStateGame(deltaTime)
 	// Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
+	
+	//write powers on top of screen
+	if (ninjaInvincible == true)
+	{
+		showPower = WRITE_INV;
+	}
+	if (coinPower == true)
+	{
+		showPower = WRITE_COIN;
+	}
+	if (lifePower == true)
+	{
+		showPower = WRITE_LIFE;
+	}
+	
+	if (writeInvTimer <= 0)
+	{
+		showPower = WRITE_NONE;
+		writeInvTimer = 5;
+	}
+	if (writeTimer <=0)
+	{
+		coinPower = false;
+		lifePower = false;
+		showPower = WRITE_NONE;
+		writeTimer = 0.8;
+	}
+	
+	 switch(showPower)
+    {
+        case WRITE_INV:
+			writeInv (deltaTime)
+        break;
+        case WRITE_COIN:
+            writeCoin (deltaTime)
+        break;
+        case WRITE_LIFE:
+            writeLife (deltaTime);
+        break;
+        case WRITE_NONE:
+            writeNone();
+        break;
+    }
 }
 
 function gameStateGameover(deltaTime)
@@ -441,6 +496,35 @@ function restart ()
 	
 	// 
 	gameState = STATE_INTRO;
+}
+
+function writeLife (deltaTime)
+{
+	context.fillStyle = "#7FFF00";
+	context.font = "30px Candara";
+	context.fillText("Extra life!", 240, 35);
+	writeTimer -= deltaTime;
+}
+
+function writeInv (deltaTime)
+{
+	context.fillStyle = "#7FFF00";
+	context.font = "30px Candara";
+	context.fillText("Invincibility!", 240, 35);
+	writeInvTimer -= deltaTime;
+}
+
+function writeCoin (deltaTime)
+{
+	context.fillStyle = "#7FFF00";
+	context.font = "30px Candara";
+	context.fillText("Extra money!", 240, 35);
+	writeTimer -= deltaTime;
+}
+
+function writeNone ()
+{
+	context.fillText(" ", 240, 35);
 }
 
 function fireEmit (deltaTime, x, y, eR, mL)

@@ -125,14 +125,17 @@ function addOneCoin()
 
 function addManyCoins()
 {
-    money += 10;
+    money += 15;
+	coinPower= true;
+	showPower = true;
 }
 
 function invincibility(deltaTime)
 {
 	// can change if wanted
-	invincibilityTimer = 3.5;
+	invincibilityTimer = 5;
 	ninjaInvincible = true;
+	showPower = true;
 }
 
 function addLife()
@@ -141,4 +144,6 @@ function addLife()
     {
         lives += 1;
     }
+	lifePower = true;
+	showPower = true;
 }
