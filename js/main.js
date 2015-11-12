@@ -432,15 +432,13 @@ function gameStateGameover(deltaTime)
     context.fillText("Game Over", 5, 200);
 
     context.fillStyle = "#FAEBD7";
-    context.font = "35px Salina";
-    context.fillText("Distance:" + distance, 240, 300);
-
-    context.font = "35px Salina";
+    context.font = "35px Candara";
+    context.fillText("Distance:" + distance, 245, 300);
     context.fillText("Money:" + money, 255, 340);
 
 	context.fillStyle = "#7FFF00";
-    context.font = "40px Salina";
-    context.fillText("Overall score total:" + overallTotal, 170, 380);
+    context.font = "40px Candara";
+    context.fillText("Overall score total:" + overallTotal, 155, 380);
 	
 	context.fillStyle = "#FFFFFF";
     context.font = "24px Candara";
@@ -495,7 +493,7 @@ function restart ()
 	ninja.position.y = FLOOR_LIMIT;
 	
 	// 
-	gameState = STATE_INTRO;
+	gameState = STATE_SPLASH;
 }
 
 function writeLife (deltaTime)
@@ -767,8 +765,8 @@ function makeMapCollectables(level)
 
                 if((tileIndex + 1) == 1)
                 {
-                    // Randomly pick a powerup (25 percent chance of powerup)
-                    var draw = getRandomInt(1, 4);
+                    // Randomly pick a powerup 
+                    var draw = getRandomInt(1, 6);
                     if(draw == 2)
                     {
                         var rand = getRandomInt(1, 3);
