@@ -169,11 +169,18 @@ var spikeBottom = new Spike(100, 100, 1);
 var allCollectables = [];
 var allLevelCollect = [];
 
-function init()
+function init($restarted)
 {
     // Main constructor.
     addEmptyCourse();
-    addRandomCourse();
+	
+	if($restarted)
+	{
+		addEmptyCourse();
+	}
+	else{
+		addRandomCourse();
+	}
 
     // Draw spikes
     idx = 0;
@@ -503,7 +510,7 @@ function restart()
     courses = [];
     allCollectables = [];
     allLevelCollect = [];
-    init();
+
 
     // need to reset course
 
@@ -521,6 +528,8 @@ function restart()
 
     // set game state
     gameState = STATE_SPLASH;
+	
+	init(true);
 }
 
 function writeLife(deltaTime)
@@ -554,7 +563,7 @@ function writeNone()
 
 function lifeOption (deltaTime)
 {
-	context.fillStyle = "#000000";
+	context.fillStyle = "#FA11EA";
 	context.font = "20px Candara";
 	context.fillText("PRESS [ENTER]", 510, 110);
 	context.fillText("to exchange ", 535, 132);

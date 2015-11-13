@@ -55,14 +55,13 @@ Ninja.prototype.update = function(deltaTime)
             this.sprite.setAnimation(ANIM_DIE_FLOOR);
         }
     }
-
-    else if(returnToRun == true)
+    else
     {
-        if(this.gravityDown == true)
+        if(this.gravityDown == true && this.sprite.currentAnimation == ANIM_DIE_FLOOR)
         {
             this.sprite.setAnimation(ANIM_RUN_FLOOR);
         }
-        if(this.gravityDown == false)
+        if(this.gravityDown == false && this.sprite.currentAnimation == ANIM_DIE_ROOF)
         {
             this.sprite.setAnimation(ANIM_RUN_ROOF);
         }
