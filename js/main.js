@@ -464,6 +464,8 @@ function gameStateGameover(deltaTime)
     context.strokeText("Press [R] to Restart!" , 600, 467);
     context.fillText("Press [R] to Restart!" , 600, 467);
 
+    context.textAlign = "left";
+
     if(keyboard.isKeyDown(keyboard.KEY_R) == true)
     {
        restart();
