@@ -956,13 +956,13 @@ function destroyCourses()
         stageOffsetX = stageOffsetX - 640;
         addRandomCourse();
 
-        if(levelSpeed < 450)
+        if(levelSpeed < 540)
         {
-            levelSpeed = levelSpeed + 25; // increase speed.
+            levelSpeed = levelSpeed + 30; // increase speed.
         }
         else
         {
-            levelSpeed = 450;
+            levelSpeed = 540;
         }
     }
 }
