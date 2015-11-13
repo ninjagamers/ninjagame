@@ -423,6 +423,10 @@ function gameStateGameover(deltaTime)
     fireEmit (deltaTime, 30, 480, 185, 5);
     fireEmit (deltaTime, -20, 480, 185, 5);
 
+    context.strokeStyle = '#273236';
+    context.lineWidth = 5;
+    context.textAlign = "left";
+
     context.fillStyle = "#FFFFFF";
     context.font = "40px Salina";
     context.fillText(highScore, 396, 37.5);
@@ -432,17 +436,25 @@ function gameStateGameover(deltaTime)
 
     context.fillStyle = "#FAEBD7";
     context.font = "35px Candara";
-    context.fillText("Distance:" + distance, 245, 300);
-    context.fillText("Money:" + money, 255, 340);
+
+    context.textAlign = "center";
+    context.strokeText("Distance: " + distance + "m", SCREEN_WIDTH/2, 280);
+    context.fillText("Distance: " + distance + "m", SCREEN_WIDTH/2, 280);
+    context.strokeText("Money: $" + money, SCREEN_WIDTH/2, 320);
+    context.fillText("Money: $" + money, SCREEN_WIDTH/2, 320);
 
     context.fillStyle = "#7FFF00";
     context.font = "40px Candara";
-    context.fillText("Overall score total:" + overallTotal, 155, 380);
+    context.strokeText("Total Score: " + overallTotal, SCREEN_WIDTH/2, 375);
+    context.fillText("Total Score: " + overallTotal, SCREEN_WIDTH/2, 375);
 
+    context.textAlign = "right";
     context.fillStyle = "#FFFFFF";
     context.font = "24px Candara";
-    context.fillText("Try Again?", 420, 443);
-    context.fillText("Press [R] to Restart!" , 400, 470);
+    context.strokeText("Try Again?", 600, 440);
+    context.fillText("Try Again?", 600, 440);
+    context.strokeText("Press [R] to Restart!" , 600, 467);
+    context.fillText("Press [R] to Restart!" , 600, 467);
 
     if(keyboard.isKeyDown(keyboard.KEY_R) == true)
     {
