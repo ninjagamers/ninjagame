@@ -159,6 +159,8 @@ var WRITE_LIFE = 2;
 var WRITE_NONE = 3;
 var showPower = WRITE_NONE;
 
+var showCoinLife = false;
+
 // Spikes
 var spikeTop = new Spike(100, 100, 0);
 var spikeBottom = new Spike(100, 100, 1);
@@ -353,6 +355,12 @@ function gameStateGame(deltaTime)
     // Handle Ninja.
     ninja.update(deltaTime);
     ninja.draw();
+	
+	//write option to swap coins for life
+	if (money >= 100)
+	{
+		lifeOption (deltaTime)
+	}
 
     //write powers on top of screen
     if (ninjaInvincible == true)
@@ -536,6 +544,23 @@ function writeCoin(deltaTime)
 function writeNone()
 {
     context.fillText(" ", 240, 35);
+}
+
+function lifeOption (deltaTime)
+{
+	context.fillStyle = "#000000";
+	context.font = "20px Candara";
+	context.fillText("PRESS [ENTER]", 510, 110);
+	context.fillText("to exchange ", 535, 132);
+	context.fillText("$100 for +1 life", 520, 154);
+	if(keyboard.isKeyDown(keyboard.KEY_ENTER) == true)
+    {
+		money -= 100;
+		if (lives < 3)
+		{
+			lives += 1
+		}
+    }
 }
 
 function fireEmit(deltaTime, x, y, eR, mL)
