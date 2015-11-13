@@ -82,6 +82,16 @@ Ninja.prototype.update = function(deltaTime)
         }
     //}
 
+    if(!shakeScreen && this.sprite.currentAnimation == ANIM_DIE_FLOOR)
+    {
+        this.sprite.setAnimation(ANIM_RUN_FLOOR);
+    }
+
+    if(!shakeScreen && this.sprite.currentAnimation == ANIM_DIE_ROOF)
+    {
+        this.sprite.setAnimation(ANIM_RUN_ROOF);
+    }
+
     // If ninja is falling down.
     if(this.gravityDown == true)
     {
