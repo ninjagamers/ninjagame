@@ -232,6 +232,8 @@ function gameStateIntro(deltaTime)
 
     context.fillStyle = "#FFFFFF";
     context.fillText("PRESS ENTER TO BEGIN!", 200, 400);
+	
+	updateSounds();
 
     if(keyboard.isKeyDown(keyboard.KEY_ENTER) == true)
     {
@@ -465,6 +467,8 @@ function gameStateGameover(deltaTime)
     context.fillText("Press [R] to Restart!" , 600, 467);
 
     context.textAlign = "left";
+	
+	updateSounds();
 
     if(keyboard.isKeyDown(keyboard.KEY_R) == true)
     {
@@ -652,6 +656,21 @@ function updateSounds()
         bgmV1Playing = false;
         bgmV1.stop();
     }
+	
+	// intro and gameover bgmV1
+	if(gameState == STATE_INTRO || gameState == STATE_GAMEOVER)
+	{
+		if(bgmV2Playing == false)
+		{
+			bgmV2Playing = true;
+			bgmV2.play();
+		}
+	}
+	else
+	{
+		bgmV2Playing = false;
+		bgmV2.stop();
+	}
 
     // Running sounds
     // Running on roof
