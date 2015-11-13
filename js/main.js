@@ -101,11 +101,11 @@ splashImage.src = "images/splash.png";
 
 // Load intro screen image
 var introImage = document.createElement("img");
-introImage.src = "images/introGrass.png"
+introImage.src = "images/introGrass.png";
 
 //load gameover screen
 var endImage = document.createElement("img");
-endImage.src = "images/gameover.png"
+endImage.src = "images/gameover.png";
 
 // Background variables
 var backnear = document.createElement("img");
@@ -116,7 +116,7 @@ backfar.src = "images/back_far.png";
 var backfarX = 0;
 var backDistance = document.createElement("img");
 backDistance.src = "images/back_distance.png";
-backDistanceX = 0;
+var backDistanceX = 0;
 
 // Sounds
 var sfxFootstepsRoofPlaying = false;
@@ -528,7 +528,7 @@ function writeNone()
 
 function fireEmit(deltaTime, x, y, eR, mL)
 {
- // Fire stuff
+    // Fire stuff
     totalTime += deltaTime;
     fireEmitter.update(deltaTime);
     // makes fire move left and right
@@ -545,13 +545,14 @@ function fireEmit(deltaTime, x, y, eR, mL)
 
 function findHighScore()
 {
-    if(overallTotal <= highScore)
+    if(localStorage.getItem("savedHighScore") !== null && localStorage.getItem("savedHighScore") >= 1)
     {
-        highScore = highScore
+        highScore = localStorage.getItem("savedHighScore");
     }
     if(overallTotal > highScore)
     {
-        highScore = overallTotal
+        highScore = overallTotal;
+        localStorage.setItem("savedHighScore", overallTotal);
     }
 }
 
@@ -601,7 +602,7 @@ function particleEmitter(deltaTime)
 // Sound update
 function updateSounds()
 {
-    // bgms
+    // BGM
     if(gameState == STATE_GAME && bgmV1Playing == false)
     {
         bgmV1Playing = true;
@@ -625,7 +626,7 @@ function updateSounds()
         sfxFootstepsV1Playing = false;
         sfxFootstepsV1.stop();
     }
-    // running on floor
+    // Running on floor
     if(ninja.position.y == FLOOR_LIMIT && sfxFootstepsV2Playing == false)
     {
         sfxFootstepsV2Playing = true;
